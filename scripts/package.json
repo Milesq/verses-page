@@ -1,0 +1,17 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "books": "ts-node --skip-project generate-books"
+  },
+  "author": "Milesq <wmilosz88@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^7.1.0"
+  },
+  "devDependencies": {
+    "ts-node": "^9.1.1"
+  }
+}
