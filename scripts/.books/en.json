@@ -1,0 +1,266 @@
+[
+  {
+    "name": "Genesis",
+    "path": "genesis"
+  },
+  {
+    "name": "Exodus",
+    "path": "exodus"
+  },
+  {
+    "name": "Leviticus",
+    "path": "leviticus"
+  },
+  {
+    "name": "Numbers",
+    "path": "numbers"
+  },
+  {
+    "name": "Deuteronomy",
+    "path": "deuteronomy"
+  },
+  {
+    "name": "Joshua",
+    "path": "joshua"
+  },
+  {
+    "name": "Judges",
+    "path": "judges"
+  },
+  {
+    "name": "Ruth",
+    "path": "ruth"
+  },
+  {
+    "name": "1 Samuel",
+    "path": "1-samuel"
+  },
+  {
+    "name": "2 Samuel",
+    "path": "2-samuel"
+  },
+  {
+    "name": "1 Kings",
+    "path": "1-kings"
+  },
+  {
+    "name": "2 Kings",
+    "path": "2-kings"
+  },
+  {
+    "name": "1 Chronicles",
+    "path": "1-chronicles"
+  },
+  {
+    "name": "2 Chronicles",
+    "path": "2-chronicles"
+  },
+  {
+    "name": "Ezra",
+    "path": "ezra"
+  },
+  {
+    "name": "Nehemiah",
+    "path": "nehemiah"
+  },
+  {
+    "name": "Esther",
+    "path": "esther"
+  },
+  {
+    "name": "Job",
+    "path": "job"
+  },
+  {
+    "name": "Psalms",
+    "path": "psalms"
+  },
+  {
+    "name": "Proverbs",
+    "path": "proverbs"
+  },
+  {
+    "name": "Ecclesiastes",
+    "path": "ecclesiastes"
+  },
+  {
+    "name": "Song of Solomon",
+    "path": "song-of-solomon"
+  },
+  {
+    "name": "Isaiah",
+    "path": "isaiah"
+  },
+  {
+    "name": "Jeremiah",
+    "path": "jeremiah"
+  },
+  {
+    "name": "Lamentations",
+    "path": "lamentations"
+  },
+  {
+    "name": "Ezekiel",
+    "path": "ezekiel"
+  },
+  {
+    "name": "Daniel",
+    "path": "daniel"
+  },
+  {
+    "name": "Hosea",
+    "path": "hosea"
+  },
+  {
+    "name": "Joel",
+    "path": "joel"
+  },
+  {
+    "name": "Amos",
+    "path": "amos"
+  },
+  {
+    "name": "Obadiah",
+    "path": "obadiah"
+  },
+  {
+    "name": "Jonah",
+    "path": "jonah"
+  },
+  {
+    "name": "Micah",
+    "path": "micah"
+  },
+  {
+    "name": "Nahum",
+    "path": "nahum"
+  },
+  {
+    "name": "Habakkuk",
+    "path": "habakkuk"
+  },
+  {
+    "name": "Zephaniah",
+    "path": "zephaniah"
+  },
+  {
+    "name": "Haggai",
+    "path": "haggai"
+  },
+  {
+    "name": "Zechariah",
+    "path": "zechariah"
+  },
+  {
+    "name": "Malachi",
+    "path": "malachi"
+  },
+  {
+    "name": "Matthew",
+    "path": "matthew"
+  },
+  {
+    "name": "Mark",
+    "path": "mark"
+  },
+  {
+    "name": "Luke",
+    "path": "luke"
+  },
+  {
+    "name": "John",
+    "path": "john"
+  },
+  {
+    "name": "Acts",
+    "path": "acts"
+  },
+  {
+    "name": "Romans",
+    "path": "romans"
+  },
+  {
+    "name": "1 Corinthians",
+    "path": "1-corinthians"
+  },
+  {
+    "name": "2 Corinthians",
+    "path": "2-corinthians"
+  },
+  {
+    "name": "Galatians",
+    "path": "galatians"
+  },
+  {
+    "name": "Ephesians",
+    "path": "ephesians"
+  },
+  {
+    "name": "Philippians",
+    "path": "philippians"
+  },
+  {
+    "name": "Colossians",
+    "path": "colossians"
+  },
+  {
+    "name": "1 Thessalonians",
+    "path": "1-thessalonians"
+  },
+  {
+    "name": "2 Thessalonians",
+    "path": "2-thessalonians"
+  },
+  {
+    "name": "1 Timothy",
+    "path": "1-timothy"
+  },
+  {
+    "name": "2 Timothy",
+    "path": "2-timothy"
+  },
+  {
+    "name": "Titus",
+    "path": "titus"
+  },
+  {
+    "name": "Philemon",
+    "path": "philemon"
+  },
+  {
+    "name": "Hebrews",
+    "path": "hebrews"
+  },
+  {
+    "name": "James",
+    "path": "james"
+  },
+  {
+    "name": "1 Peter",
+    "path": "1-peter"
+  },
+  {
+    "name": "2 Peter",
+    "path": "2-peter"
+  },
+  {
+    "name": "1 John",
+    "path": "1-john"
+  },
+  {
+    "name": "2 John",
+    "path": "2-john"
+  },
+  {
+    "name": "3 John",
+    "path": "3-john"
+  },
+  {
+    "name": "Jude",
+    "path": "jude"
+  },
+  {
+    "name": "Revelation",
+    "path": "revelation"
+  }
+]
