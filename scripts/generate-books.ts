@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { writeFileSync } from 'fs'
 import * as puppeteer from 'puppeteer'
 import config from './config'
@@ -21,14 +20,18 @@ async function getBooks(lang: string): Promise<BookData[]> {
 
   const booksContainer = await page.$('.booksContainer')
   const booksElements = await booksContainer.$$('.bibleBook')
-  const names = await Promise.all(booksElements.map(container =>
-    container.$('.fullName').then(el => el.evaluate(el => el.textContent))
-  ))
+  const names = await Promise.all(
+    booksElements.map(container =>
+      container
+        .$('.fullName')
+        .then(nameContainer => nameContainer.evaluate(el => el.textContent))
+    )
+  )
 
   await browser.close()
   return names.map(book => ({
     name: book,
-    path: bookNormalize(book)
+    path: bookNormalize(book),
   }))
 }
 
