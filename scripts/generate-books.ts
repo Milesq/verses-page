@@ -3,11 +3,7 @@ import { mkdirSync, existsSync, writeFileSync } from 'fs'
 import * as puppeteer from 'puppeteer'
 import config from './config'
 import { bookNormalize } from './utils'
-
-interface BookData {
-  name: string
-  path: string
-}
+import BookData from './BookData'
 
 async function goToBible(page: puppeteer.Page): Promise<void> {
   await page.click(config.SELECTOR.READ_BIBLE)
