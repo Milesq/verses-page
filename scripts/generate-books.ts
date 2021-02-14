@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { mkdirSync, existsSync, writeFileSync } from 'fs'
+import { writeFileSync } from 'fs'
 import * as puppeteer from 'puppeteer'
 import config from './config'
 import { bookNormalize } from './utils'
@@ -34,13 +34,11 @@ async function getBooks(lang: string): Promise<BookData[]> {
 
 const language = process.argv[2] || 'en'
 
-getBooks(language).then(names => {
-  const { DATA_DIR } = config
-  const json = JSON.stringify(names, null, 2)
+getBooks(language).then(async names => {
+  const languages = await import(config.DATA_FILE).catch(() => ({}))
+  languages[language] = names
 
-  if (!existsSync(DATA_DIR)) {
-    mkdirSync(DATA_DIR)
-  }
+  const json = JSON.stringify(languages, null, 2)
 
-  writeFileSync(`${DATA_DIR}/${language}.json`, json)
+  writeFileSync(config.DATA_FILE, json)
 })
