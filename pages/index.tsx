@@ -1,18 +1,15 @@
-import { useState } from 'react'
+import { useRouter } from 'next/router'
 import type { FC } from 'react'
-import { inc } from 'ramda'
+import NavBar from '../components/NavBar'
 
 const Home: FC = () => {
-  const [count, setCount] = useState(0)
-  const x = {
-    s: 3,
-  }
-  console.log(x)
+  const { locale, locales } = useRouter()
 
   return (
-    <div className="bg-gray-500 text-white w-11" onClick={() => setCount(inc)}>
-      {count}
-    </div>
+    <>
+      <NavBar />
+      <div style={{ height: '200vh' }}>hello</div>
+    </>
   )
 }
 
