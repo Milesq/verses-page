@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import throttle from 'lodash.throttle'
 
 interface ScrollData {
   x: number
@@ -11,11 +12,14 @@ function useScroll(): ScrollData {
     y: 0,
   })
 
-  const scrollHandler = () =>
-    setScroll({
-      x: window.scrollX,
-      y: window.scrollY,
-    })
+  const scrollHandler = throttle(
+    () =>
+      setScroll({
+        x: window.scrollX,
+        y: window.scrollY,
+      }),
+    50
+  )
 
   useEffect(() => {
     window.addEventListener('scroll', scrollHandler)
