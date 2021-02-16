@@ -15,6 +15,7 @@ class MyDocument extends Document {
             href="/AquireBold-8Ma60.otf"
             as="font"
             type="font/otf"
+            crossOrigin="anonymous"
           />
           <meta name="robots" content="noindex,follow" />
           <meta
