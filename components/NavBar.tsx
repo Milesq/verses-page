@@ -6,13 +6,17 @@ import { useScroll } from '../hooks'
 
 const NavBar: FC = () => {
   const { y: scroll } = useScroll()
-  const { locales, locale } = useRouter()
+  const { locales, locale, ...router } = useRouter()
 
   const langs = locales.map(lang => ({
     value: lang,
     label: lang.toUpperCase(),
   }))
   const currentLang = langs.find(lang => lang.value === locale)
+
+  function selectLang({ value }: { value: string }) {
+    router.push('/', '/', { locale: value })
+  }
 
   return (
     <nav
@@ -26,7 +30,14 @@ const NavBar: FC = () => {
 
       <span className="text-4xl font-aquire select-none">Verse</span>
 
-      <Select className="w-20" defaultValue={currentLang} options={langs} />
+      <Select
+        instanceId="react-select-language"
+        className="w-20"
+        defaultValue={currentLang}
+        options={langs}
+        isSearchable={false}
+        onChange={selectLang}
+      />
     </nav>
   )
 }
