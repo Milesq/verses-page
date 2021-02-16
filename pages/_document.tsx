@@ -17,6 +17,10 @@ class MyDocument extends Document {
             type="font/otf"
           />
           <meta name="robots" content="noindex,follow" />
+          <meta
+            name="description"
+            content="Generuj plansze z biblijnymi wersetami!"
+          />
         </Head>
         <body>
           <Main />
