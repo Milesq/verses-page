@@ -17,7 +17,7 @@ const NavBar: FC = () => {
   return (
     <nav
       className={`${
-        scroll && 'shadow-md'
+        scroll ? 'shadow-md' : 'md:shadow'
       } transition-shadow duration-300 h-16 fixed w-full flex justify-between items-center px-3 bg-white`}
     >
       <div>
