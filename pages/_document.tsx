@@ -16,6 +16,7 @@ class MyDocument extends Document {
             as="font"
             type="font/otf"
           />
+          <meta name="robots" content="noindex,follow" />
         </Head>
         <body>
           <Main />
