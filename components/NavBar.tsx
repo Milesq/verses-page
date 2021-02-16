@@ -31,14 +31,20 @@ const NavBar: FC = () => {
 
       <span className="text-4xl font-aquire select-none">Verse</span>
 
-      <Select
-        instanceId="react-select-language"
-        className="w-20"
-        defaultValue={currentLang}
-        options={langs}
-        isSearchable={false}
-        onChange={selectLang}
-      />
+      <div>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+        <label htmlFor="react-select-language" />
+        <Select
+          aria-label=""
+          id="react-select-language"
+          instanceId="react-select-language"
+          className="w-20"
+          defaultValue={currentLang}
+          options={langs}
+          isSearchable={false}
+          onChange={selectLang}
+        />
+      </div>
     </nav>
   )
 }
