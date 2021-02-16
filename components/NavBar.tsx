@@ -15,6 +15,7 @@ const NavBar: FC = () => {
   const currentLang = langs.find(lang => lang.value === locale)
 
   function selectLang({ value }: { value: string }) {
+    document.cookie = `NEXT_LOCALE=${value}`
     router.push('/', '/', { locale: value })
   }
 
