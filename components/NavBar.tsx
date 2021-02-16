@@ -1,9 +1,18 @@
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import type { FC } from 'react'
+import Select from 'react-select'
 import { useScroll } from '../hooks'
 
 const NavBar: FC = () => {
   const { y: scroll } = useScroll()
+  const { locales, locale } = useRouter()
+
+  const langs = locales.map(lang => ({
+    value: lang,
+    label: lang.toUpperCase(),
+  }))
+  const currentLang = langs.find(lang => lang.value === locale)
 
   return (
     <nav
