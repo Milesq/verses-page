@@ -1,8 +1,15 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import type { FC } from 'react'
+import { FC, useEffect } from 'react'
 import Select from 'react-select'
+import ThemeSwitch from './ThemeSwitch'
 import { useScroll } from '../hooks'
+
+function parseCookies(cookies: string): Record<string, string> {
+  const parsedCookies = cookies.split('; ').map(cookie => cookie.split('='))
+
+  return Object.fromEntries(parsedCookies)
+}
 
 const NavBar: FC = () => {
   const { y: scroll } = useScroll()
@@ -19,12 +26,26 @@ const NavBar: FC = () => {
     router.push('/', '/', { locale: value })
   }
 
+  function changeTheme(active: boolean) {
+    document.querySelector('html').classList.toggle('dark')
+    document.cookie = `darkTheme=${!active}`
+  }
+
+  useEffect(() => {
+    const cookies = parseCookies(document.cookie)
+    const isDarkTheme = JSON.parse(cookies.darkTheme || null)
+
+    if (isDarkTheme) {
+      document.querySelector('html').classList.add('dark')
+    }
+  }, [])
+
   return (
     <>
       <nav
         className={`${
           scroll ? 'shadow-md' : 'md:shadow'
-        } transition-shadow duration-300 h-16 fixed w-full flex justify-between items-center px-3 bg-white`}
+        } transition-shadow duration-300 h-16 fixed w-full flex justify-between items-center px-3 bg-white dark:bg-gray-800`}
       >
         <div>
           <Image src="/verse.png" width={40} height={40} alt="Verse's Logo" />
@@ -32,6 +53,7 @@ const NavBar: FC = () => {
 
         <span className="text-4xl font-aquire select-none">Verse</span>
 
+        <ThemeSwitch onChange={changeTheme} />
         <div>
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label htmlFor="react-select-language" />

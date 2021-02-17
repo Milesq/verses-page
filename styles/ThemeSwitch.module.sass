@@ -1,0 +1,36 @@
+=size($w, $h: $w)
+  width: $w
+  height: $h
+
+.btn
+  position: relative
+  background-color: #eee
+  transition: background-color .1s linear
+  will-change: background-color
+
+
+  width: 50px
+  height: 30px
+  border-radius: 30px
+
+  &::before
+    display: block
+    content: ' '
+    +size(25px)
+    top: 2.5px
+    left: 2.5px
+    border-radius: 50%
+    transition: transform .2s ease, background-color 1.3s ease
+    will-change: transform, background-color
+
+    position: absolute
+    background-color: #fff
+
+  &--active
+    background-color: #333
+
+    &::before
+      transform: translateX(20px) scale(.7)
+
+  &:not(&--active)::before
+    background-color: #F0C419
