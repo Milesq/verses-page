@@ -32,6 +32,7 @@
     "react/jsx-props-no-spreading": "off",
     "react/prop-types": "off",
     "import/extensions": ["warn", "never"],
-    "arrow-body-style": "warn"
+    "arrow-body-style": "warn",
+    "react-hooks/exhaustive-deps": "off"
   }
 }
