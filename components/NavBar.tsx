@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FC, useEffect, useState } from 'react'
 import Select from 'react-select'
+import Ripples from 'react-ripples'
 import ThemeSwitch from './ThemeSwitch'
 import { useScroll } from '../hooks'
 
@@ -61,7 +62,9 @@ const NavBar: FC = () => {
 
         <div className="flex items-center justify-end">
           <span className="pr-4">
-            <Link href="/issue">Zgłoś błąd</Link>
+            <Ripples className="p-2">
+              <Link href="/issue">Zgłoś błąd</Link>
+            </Ripples>
           </span>
           <ThemeSwitch onChange={changeTheme} value={theme === 'dark'} />
           <div className="pl-4">
