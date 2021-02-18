@@ -7,7 +7,7 @@ import ThemeSwitch from '../ThemeSwitch'
 import Hamburger from '../Hamburger'
 
 const NavBar: FC = () => {
-  const { locales, locale, ...router } = useRouter()
+  const { locales, locale, route, ...router } = useRouter()
   const [theme, setTheme] = useState('')
 
   const langs = locales.map(lang => ({
@@ -18,7 +18,7 @@ const NavBar: FC = () => {
 
   function selectLang({ value }: { value: string }) {
     document.cookie = `NEXT_LOCALE=${value}`
-    router.push('/', '/', { locale: value })
+    router.push(route, route, { locale: value })
   }
 
   function changeTheme(active: boolean) {
