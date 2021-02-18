@@ -41,16 +41,20 @@ const NavBar: FC = () => {
       <nav
         className={`${
           scroll ? 'shadow-md' : 'md:shadow'
-        } transition-shadow duration-300 h-16 fixed w-full flex justify-between items-center px-3 bg-white dark:bg-gray-800`}
+        } transition-shadow duration-300 h-16 fixed w-full grid grid-cols-3 px-3 bg-white dark:bg-gray-800`}
       >
-        <div>
+        <div className="flex items-center">
           <Image src="/verse.png" width={40} height={40} alt="Verse's Logo" />
         </div>
 
-        <span className="text-4xl font-aquire select-none">Verse</span>
+        <span className="text-4xl font-aquire select-none flex items-center justify-center">
+          Verse
+        </span>
 
-        <div className="flex items-center">
-          <Link href="/issue">Zgłoś błąd</Link>
+        <div className="flex items-center justify-end">
+          <span className="pr-4">
+            <Link href="/issue">Zgłoś błąd</Link>
+          </span>
           <ThemeSwitch onChange={changeTheme} value={theme === 'dark'} />
           <div className="pl-4">
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
