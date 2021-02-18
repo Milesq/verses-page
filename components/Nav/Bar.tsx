@@ -28,7 +28,7 @@ const NavBar: FC = () => {
           </Link>
         </div>
 
-        <span className="text-4xl font-aquire select-none flex items-center justify-center">
+        <span className="text-4xl font-aquire pl-3 md:pl-0 select-none flex items-center justify-center">
           <Link href="/">Verse</Link>
         </span>
         <div className="block md:hidden" />
