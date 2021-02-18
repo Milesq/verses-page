@@ -9,6 +9,7 @@ import Hamburger from '../Hamburger'
 const NavBar: FC = () => {
   const { locales, locale, route, ...router } = useRouter()
   const [theme, setTheme] = useState('')
+  const [menuOpened, setMenuOpened] = useState(false)
 
   const langs = locales.map(lang => ({
     value: lang,
@@ -35,20 +36,60 @@ const NavBar: FC = () => {
     setTheme(selectedTheme)
   }, [])
 
+  const Tr = () => <div className="md:hidden bg-gray-300 border w-full" />
+
   return (
     <>
       <div className="flex items-center justify-end md:hidden">
-        <Hamburger type="spring" />
+        <Hamburger
+          type="spring"
+          onChange={isActive => setMenuOpened(isActive)}
+        />
       </div>
 
-      <div className="hidden md:flex items-center justify-end">
-        <span className="pr-4">
+      <div
+        className={`
+          ${!menuOpened ? 'hidden' : ''}
+          w-screen
+          h-screen
+          absolute
+          top-16
+          left-0
+          bg-black
+          opacity-30
+        `}
+      />
+
+      <div
+        className={`
+          ${!menuOpened ? 'hidden' : ''}
+          bg-white
+
+          flex-col
+          w-screen
+          absolute
+
+          md:flex-row
+          md:w-auto
+          md:static
+
+          flex
+          md:flex
+          top-16
+          items-center
+          justify-end
+        `}
+      >
+        <Tr />
+        <span className="md:pr-4 py-3 md:py-0">
           <Ripples className="p-2">
             <Link href="/issue">Zgłoś błąd</Link>
           </Ripples>
         </span>
+
         <ThemeSwitch onChange={changeTheme} value={theme === 'dark'} />
-        <div className="pl-4">
+
+        <div className="md:pl-4 py-3 md:py-0">
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label htmlFor="react-select-language" />
           <Select
@@ -62,6 +103,8 @@ const NavBar: FC = () => {
             onChange={selectLang}
           />
         </div>
+
+        <Tr />
       </div>
     </>
   )
