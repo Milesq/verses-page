@@ -1,19 +1,14 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { FC, useEffect } from 'react'
+import { FC, useEffect, useState } from 'react'
 import Select from 'react-select'
 import ThemeSwitch from './ThemeSwitch'
 import { useScroll } from '../hooks'
 
-function parseCookies(cookies: string): Record<string, string> {
-  const parsedCookies = cookies.split('; ').map(cookie => cookie.split('='))
-
-  return Object.fromEntries(parsedCookies)
-}
-
 const NavBar: FC = () => {
   const { y: scroll } = useScroll()
   const { locales, locale, ...router } = useRouter()
+  const [theme, setTheme] = useState('')
 
   const langs = locales.map(lang => ({
     value: lang,
@@ -28,16 +23,16 @@ const NavBar: FC = () => {
 
   function changeTheme(active: boolean) {
     document.querySelector('html').classList.toggle('dark')
-    document.cookie = `darkTheme=${!active}`
+    localStorage.setItem('theme', active ? 'dark' : 'light')
   }
 
   useEffect(() => {
-    const cookies = parseCookies(document.cookie)
-    const isDarkTheme = JSON.parse(cookies.darkTheme || null)
-
-    if (isDarkTheme) {
-      document.querySelector('html').classList.add('dark')
+    const selectedTheme = localStorage.getItem('theme')
+    if (selectedTheme === 'dark') {
+      changeTheme(true)
     }
+
+    setTheme(selectedTheme)
   }, [])
 
   return (
@@ -53,7 +48,7 @@ const NavBar: FC = () => {
 
         <span className="text-4xl font-aquire select-none">Verse</span>
 
-        <ThemeSwitch onChange={changeTheme} />
+        <ThemeSwitch onChange={changeTheme} value={theme === 'dark'} />
         <div>
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label htmlFor="react-select-language" />

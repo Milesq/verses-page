@@ -1,20 +1,28 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import { FC, useState } from 'react'
+import { not } from 'ramda'
+import { FC, useEffect, useState } from 'react'
 import styles from '../styles/ThemeSwitch.module.sass'
 
 interface ThemeSwitchProps {
-  onChange?: (isActive: boolean) => void
+  onChange: (isActive: boolean) => void
+  value: boolean
 }
 
-const ThemeSwitch: FC<ThemeSwitchProps> = ({ onChange = () => {} }) => {
-  const [active, setActive] = useState(false)
+const ThemeSwitch: FC<Partial<ThemeSwitchProps>> = ({
+  value = false,
+  onChange = () => {},
+}) => {
+  const [active, setActive] = useState(value)
 
-  const neg = (val: boolean): boolean => !val
   const handler = () => {
-    setActive(neg)
-    onChange(active)
+    setActive(not)
+    onChange(!active)
   }
+
+  useEffect(() => {
+    setActive(value)
+  }, [value])
 
   return (
     <span
