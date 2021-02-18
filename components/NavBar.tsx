@@ -44,17 +44,19 @@ const NavBar: FC = () => {
         } transition-shadow duration-300 h-16 fixed w-full grid grid-cols-3 px-3 bg-white dark:bg-gray-800 dark:text-white`}
       >
         <div className="flex items-center">
-          <Image
-            src="/verse.png"
-            className="navbar-logo"
-            width={40}
-            height={40}
-            alt="Verse's Logo"
-          />
+          <Link href="/">
+            <Image
+              src="/verse.png"
+              className="navbar-logo cursor-pointer"
+              width={40}
+              height={40}
+              alt="Verse's Logo"
+            />
+          </Link>
         </div>
 
         <span className="text-4xl font-aquire select-none flex items-center justify-center">
-          Verse
+          <Link href="/">Verse</Link>
         </span>
 
         <div className="flex items-center justify-end">
