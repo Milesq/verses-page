@@ -63,17 +63,17 @@ const Home: FC = () => {
           <Ripples>
             <button
               className="
-              transition
-              duration-150
-              bg-green-600
-              hover:bg-green-500
-              shadow
-              hover:shadow-md
-              text-white
-              px-3 py-2
-              rounded-full
-              focus:outline-none
-            "
+                transition
+                duration-150
+                bg-green-600
+                hover:bg-green-500
+                shadow
+                hover:shadow-md
+                text-white
+                px-3 py-2
+                rounded-full
+                focus:outline-none
+              "
               type="submit"
             >
               Generuj
