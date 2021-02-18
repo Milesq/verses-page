@@ -12,7 +12,7 @@ const NavBar: FC = () => {
       <nav
         className={`${
           scroll ? 'shadow-md' : 'md:shadow'
-        } transition-shadow duration-300 h-16 fixed w-full grid grid-cols-3 px-3 bg-white dark:bg-gray-800 dark:text-white`}
+        } transition-shadow duration-300 h-16 fixed w-full grid grid-cols-3 px-3 bg-white dark:bg-gray-800 dark:text-white z-50`}
       >
         <div className="hidden md:flex items-center">
           <Link href="/">
