@@ -49,6 +49,7 @@ const Home: FC = () => {
             focus:outline-none
             focus:shadow-outline
           "
+          autoComplete="off"
           type="text"
         />
 
