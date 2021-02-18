@@ -49,7 +49,6 @@ const Home: FC = () => {
             focus:outline-none
             focus:shadow-outline
           "
-          id="username"
           type="text"
         />
 
