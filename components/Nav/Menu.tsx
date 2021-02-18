@@ -37,7 +37,7 @@ const NavBar: FC = () => {
 
   return (
     <>
-      <div className="block md:hidden">
+      <div className="flex items-center justify-end md:hidden">
         <Hamburger type="spring" />
       </div>
 
