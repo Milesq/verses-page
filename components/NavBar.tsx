@@ -46,13 +46,15 @@ const NavBar: FC = () => {
       >
         <div className="flex items-center">
           <Link href="/">
-            <Image
-              src="/verse.png"
-              className="navbar-logo cursor-pointer"
-              width={40}
-              height={40}
-              alt="Verse's Logo"
-            />
+            <div>
+              <Image
+                src="/verse.png"
+                className="navbar-logo cursor-pointer"
+                width={40}
+                height={40}
+                alt="Verse's Logo"
+              />
+            </div>
           </Link>
         </div>
 
