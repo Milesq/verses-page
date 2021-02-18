@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FC, useEffect, useState } from 'react'
 import Select from 'react-select'
@@ -49,6 +50,7 @@ const NavBar: FC = () => {
         <span className="text-4xl font-aquire select-none">Verse</span>
 
         <div className="flex items-center">
+          <Link href="/issue">Zgłoś błąd</Link>
           <ThemeSwitch onChange={changeTheme} value={theme === 'dark'} />
           <div className="pl-4">
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}

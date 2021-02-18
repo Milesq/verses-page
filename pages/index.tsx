@@ -3,7 +3,6 @@ import Head from 'next/head'
 import type { FC } from 'react'
 import Select from 'react-select'
 import Ripples from 'react-ripples'
-import NavBar from '../components/NavBar'
 import allBooks from '../scripts/books.json'
 import BookData from '../scripts/BookData'
 
@@ -21,7 +20,6 @@ const Home: FC = () => {
       <Head>
         <title>Verses - generowanie plansz z wersetami</title>
       </Head>
-      <NavBar />
       <div className="mt-4 container px-8 lg:px-52 xl:px-96 mx-auto">
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label htmlFor="react-select-book" />
