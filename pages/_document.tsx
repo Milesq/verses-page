@@ -23,7 +23,7 @@ class MyDocument extends Document {
             content="Generuj plansze z biblijnymi wersetami!"
           />
         </Head>
-        <body>
+        <body className="dark:bg-gray-700" data-dark>
           <Main />
           <NextScript />
         </body>
