@@ -5,11 +5,13 @@ import Ripples from 'react-ripples'
 import { useRouter } from 'next/router'
 import ThemeSwitch from '../ThemeSwitch'
 import Hamburger from '../Hamburger'
+import { useSchanged } from '../../hooks'
 
 const NavBar: FC = () => {
   const { locales, locale, route, ...router } = useRouter()
   const [theme, setTheme] = useState('')
   const [menuOpened, setMenuOpened] = useState(false)
+  const [overlayOpacity, setOverlayOpacity] = useState('0')
 
   const langs = locales.map(lang => ({
     value: lang,
@@ -36,6 +38,10 @@ const NavBar: FC = () => {
     setTheme(selectedTheme)
   }, [])
 
+  useSchanged(() => {
+    setOverlayOpacity(overlayOpacity === '30' ? '0' : '30')
+  }, [menuOpened])
+
   const Tr = () => <div className="md:hidden bg-gray-300 border w-full" />
 
   return (
@@ -50,13 +56,15 @@ const NavBar: FC = () => {
       <div
         className={`
           ${!menuOpened ? 'hidden' : ''}
+          opacity-${overlayOpacity}
+          transition-opacity
+
           w-screen
           h-screen
           absolute
           top-16
           left-0
           bg-black
-          opacity-30
         `}
       />
 
