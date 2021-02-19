@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useRef, useState, Ref } from 'react'
 import Select from 'react-select'
 import Ripples from 'react-ripples'
 import { useRouter } from 'next/router'
@@ -13,7 +13,7 @@ const NavBar: FC = () => {
   const { locales, locale, route, ...router } = useRouter()
   const [theme, setTheme] = useState('')
   const [menuOpened, setMenuOpened] = useState(false)
-  const [overlayOpacity, setOverlayOpacity] = useState('0')
+  const overlayElement: Ref<HTMLDivElement> = useRef()
 
   const langs = locales.map(lang => ({
     value: lang,
@@ -41,7 +41,9 @@ const NavBar: FC = () => {
   }, [])
 
   useSchanged(() => {
-    setOverlayOpacity(overlayOpacity === '30' ? '0' : '30')
+    setTimeout(() => {
+      overlayElement.current.classList.toggle('opacity-70')
+    }, 5)
   }, [menuOpened])
 
   const Tr = () => (
@@ -58,17 +60,20 @@ const NavBar: FC = () => {
       </div>
 
       <div
+        ref={overlayElement}
         className={minimize`
           ${!menuOpened ? 'hidden' : ''}
-          opacity-${overlayOpacity}
+          opacity-0
+          bg-black
+          dark:bg-gray-900
           transition-opacity
+          duration-500
 
           w-screen
           h-screen
           absolute
           top-16
           left-0
-          bg-black
         `}
       />
 
