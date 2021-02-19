@@ -40,6 +40,10 @@ const NavBar: FC = () => {
     setTheme(selectedTheme)
   }, [])
 
+  useEffect(() => {
+    setMenuOpened(false)
+  }, [route])
+
   useSchanged(() => {
     setTimeout(() => {
       overlayElement.current.classList.toggle('opacity-70')
