@@ -7,6 +7,7 @@ import ThemeSwitch from '../ThemeSwitch'
 import Hamburger from '../Hamburger'
 import reactSelectThemedStyle from '../../styles/react-select-themed'
 import { useSchanged } from '../../hooks'
+import { minimize } from '../../utils'
 
 const NavBar: FC = () => {
   const { locales, locale, route, ...router } = useRouter()
@@ -57,7 +58,7 @@ const NavBar: FC = () => {
       </div>
 
       <div
-        className={`
+        className={minimize`
           ${!menuOpened ? 'hidden' : ''}
           opacity-${overlayOpacity}
           transition-opacity
@@ -72,7 +73,7 @@ const NavBar: FC = () => {
       />
 
       <div
-        className={`
+        className={minimize`
           ${!menuOpened ? 'hidden' : ''}
           bg-white
           dark:bg-gray-700

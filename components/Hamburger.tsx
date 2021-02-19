@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import { not } from 'ramda'
+import { minimize } from '../utils'
 
 interface HamburgerProps {
   onChange: (isActive: boolean) => void
@@ -18,7 +19,7 @@ const Hamburger: FC<Partial<HamburgerProps>> = ({
 
   return (
     <button
-      className={`
+      className={minimize`
         focus-visible:ring
         focus:outline-none
         hamburger

@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FC } from 'react'
 import { useScroll } from '../../hooks'
+import { minimize } from '../../utils'
 import NavMenu from './Menu'
 
 const NavBar: FC = () => {
@@ -10,7 +11,7 @@ const NavBar: FC = () => {
   return (
     <>
       <nav
-        className={`${
+        className={minimize`${
           scroll ? 'shadow-md' : 'md:shadow'
         } transition-shadow duration-300 h-16 fixed w-full grid grid-cols-3 px-3 bg-white dark:bg-gray-800 dark:text-white z-50`}
       >
