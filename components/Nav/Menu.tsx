@@ -5,6 +5,7 @@ import Ripples from 'react-ripples'
 import { useRouter } from 'next/router'
 import ThemeSwitch from '../ThemeSwitch'
 import Hamburger from '../Hamburger'
+import reactSelectThemedStyle from '../../styles/react-select-themed'
 import { useSchanged } from '../../hooks'
 
 const NavBar: FC = () => {
@@ -103,6 +104,7 @@ const NavBar: FC = () => {
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label htmlFor="react-select-language" />
           <Select
+            styles={reactSelectThemedStyle}
             aria-label=""
             id="react-select-language"
             instanceId="react-select-language"

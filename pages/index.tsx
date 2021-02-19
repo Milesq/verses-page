@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import type { FC } from 'react'
-import Select, { StylesConfig } from 'react-select'
+import Select from 'react-select'
 import Ripples from 'react-ripples'
+import reactSelectThemedStyle from '../styles/react-select-themed'
 import allBooks from '../scripts/books.json'
 import BookData from '../scripts/BookData'
 
@@ -15,40 +16,6 @@ const Home: FC = () => {
     value: path,
   }))
 
-  const selectStyles: StylesConfig<Record<string, string>, false> = {
-    control: styles => ({
-      ...styles,
-      backgroundColor: 'var(--input-bg)',
-      borderColor: 'var(--input-border-color)',
-    }),
-    singleValue: styles => ({
-      ...styles,
-      color: 'var(--input-text)',
-    }),
-    placeholder: styles => ({
-      ...styles,
-      color: '#9CA3AF',
-    }),
-    option: styles => ({
-      ...styles,
-      color: 'var(--input-text)',
-      backgroundColor: 'var(--input-bg)',
-      cursor: 'pointer',
-      ':hover': {
-        ...styles[':hover'],
-        backgroundColor: 'var(--input-bg-hover)',
-      },
-      ':focus': {
-        ...styles[':focus'],
-        backgroundColor: 'var(--input-bg-focus)',
-      },
-    }),
-    menuList: styles => ({
-      ...styles,
-      backgroundColor: 'var(--input-bg)',
-    }),
-  }
-
   return (
     <>
       <Head>
@@ -58,7 +25,7 @@ const Home: FC = () => {
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label htmlFor="react-select-book" />
         <Select
-          styles={selectStyles}
+          styles={reactSelectThemedStyle}
           aria-label=""
           placeholder="Wyszukaj księgę"
           id="react-select-book"
