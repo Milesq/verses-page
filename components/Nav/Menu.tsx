@@ -42,7 +42,9 @@ const NavBar: FC = () => {
     setOverlayOpacity(overlayOpacity === '30' ? '0' : '30')
   }, [menuOpened])
 
-  const Tr = () => <div className="md:hidden bg-gray-300 border w-full" />
+  const Tr = () => (
+    <div className="md:hidden bg-gray-300 dark:border-gray-900 border w-full" />
+  )
 
   return (
     <>
@@ -71,7 +73,7 @@ const NavBar: FC = () => {
       <div
         className={`
           ${!menuOpened ? 'hidden' : ''}
-          bg-white
+          md:bg-transparent
 
           flex-col
           w-screen

@@ -15,6 +15,7 @@ module.exports = {
         input: {
           DEFAULT: '#ccc',
           darken: '#b3b3b3',
+          darkhover: '#B3B3B3',
         },
       },
     },

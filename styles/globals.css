@@ -6,3 +6,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.dark {
+  --input-bg: #374151;
+  --input-bg-hover: #1F2937;
+  --input-text: #E5E7EB;
+  --input-bg-focus: #111827;
+  --input-border-color: #6B7280;
+}
+
+html {
+  --input-bg-hover: #deebff;
+  --input-bg-focus: #b2d4ff;
+  --input-border-color: #ccc;
+}
+
+* {
+  transition: background-color .2s ease;
+}
