@@ -74,7 +74,10 @@ const NavBar: FC = () => {
       <div
         className={`
           ${!menuOpened ? 'hidden' : ''}
+          bg-white
+          dark:bg-gray-700
           md:bg-transparent
+          md:dark:bg-transparent
 
           flex-col
           w-screen
