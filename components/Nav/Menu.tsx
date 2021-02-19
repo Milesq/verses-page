@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { FC, useEffect, useRef, useState, Ref } from 'react'
+import { ElementRef, FC, useEffect, useRef, useState } from 'react'
 import Select from 'react-select'
 import Ripples from 'react-ripples'
 import { useRouter } from 'next/router'
@@ -13,7 +13,8 @@ const NavBar: FC = () => {
   const { locales, locale, route, ...router } = useRouter()
   const [theme, setTheme] = useState('')
   const [menuOpened, setMenuOpened] = useState(false)
-  const overlayElement: Ref<HTMLDivElement> = useRef()
+  const overlayElement = useRef<HTMLDivElement>()
+  const hamburger = useRef<ElementRef<typeof Hamburger>>()
 
   const langs = locales.map(lang => ({
     value: lang,
@@ -42,6 +43,7 @@ const NavBar: FC = () => {
 
   useEffect(() => {
     setMenuOpened(false)
+    hamburger.current.close()
   }, [route])
 
   useSchanged(() => {
@@ -58,6 +60,7 @@ const NavBar: FC = () => {
     <>
       <div className="flex items-center justify-end md:hidden">
         <Hamburger
+          ref={hamburger}
           type="spring"
           onChange={isActive => setMenuOpened(isActive)}
         />
