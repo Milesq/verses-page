@@ -8,12 +8,29 @@ interface Inputs {
   content: string
 }
 
+type CautionResponse = Partial<{
+  ok: boolean
+  error: string
+}>
+
+function handleError(resp: CautionResponse) {
+  if (!resp.ok) {
+    // eslint-disable-next-line no-alert
+    alert(`Wysłanie twojej wskazówki nie powiodło się z powodu: ${resp.error}`)
+  }
+}
+
+async function sendCaution(data: Inputs) {
+  const response: CautionResponse = await fetch('/api/caution/create', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  }).then(res => res.json())
+
+  handleError(response)
+}
+
 const Issue: FC = () => {
   const { register, handleSubmit, errors } = useForm<Inputs>()
-
-  function sendCaution(data: Inputs) {
-    console.log(data)
-  }
 
   return (
     <>
