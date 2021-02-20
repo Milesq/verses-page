@@ -13,24 +13,26 @@ type CautionResponse = Partial<{
   error: string
 }>
 
-function handleError(resp: CautionResponse) {
-  if (!resp.ok) {
-    // eslint-disable-next-line no-alert
-    alert(`Wysłanie twojej wskazówki nie powiodło się z powodu: ${resp.error}`)
-  }
-}
-
-async function sendCaution(data: Inputs) {
-  const response: CautionResponse = await fetch('/api/caution/create', {
-    method: 'POST',
-    body: JSON.stringify(data),
-  }).then(res => res.json())
-
-  handleError(response)
-}
-
 const Issue: FC = () => {
-  const { register, handleSubmit, errors } = useForm<Inputs>()
+  const { register, handleSubmit, errors, reset } = useForm<Inputs>()
+
+  const sendCaution: (data: Inputs) => Promise<void> = async data => {
+    const resp: CautionResponse = await fetch('/api/caution/create', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }).then(res => res.json())
+
+    if (!resp.ok) {
+      // eslint-disable-next-line no-alert
+      alert(
+        `Wysłanie twojej wskazówki nie powiodło się z powodu: ${resp.error}`
+      )
+    } else {
+      reset()
+      // eslint-disable-next-line no-alert
+      alert('Pomyślnie wysłano wskazówkę. Dziękuję :-)')
+    }
+  }
 
   return (
     <>
