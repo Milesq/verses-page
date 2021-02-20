@@ -21,7 +21,6 @@ const Home: FC = () => {
       <Head>
         <title>Verses - generowanie plansz z wersetami</title>
       </Head>
-      <div className="mt-4 container px-8 lg:px-52 xl:px-96 mx-auto">
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label htmlFor="react-select-book" />
         <Select
@@ -94,7 +93,6 @@ const Home: FC = () => {
         </div>
 
         <div className="clear-both" />
-      </div>
     </>
   )
 }
