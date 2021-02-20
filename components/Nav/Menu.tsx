@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import Link from 'next/link'
 import { ElementRef, FC, useEffect, useRef, useState } from 'react'
 import Select from 'react-select'
@@ -15,6 +17,10 @@ const NavBar: FC = () => {
   const [menuOpened, setMenuOpened] = useState(false)
   const overlayElement = useRef<HTMLDivElement>()
   const hamburger = useRef<ElementRef<typeof Hamburger>>()
+
+  function closeHamburger() {
+    hamburger.current.close()
+  }
 
   const langs = locales.map(lang => ({
     value: lang,
@@ -43,7 +49,7 @@ const NavBar: FC = () => {
 
   useEffect(() => {
     setMenuOpened(false)
-    hamburger.current.close()
+    closeHamburger()
   }, [route])
 
   useSchanged(() => {
@@ -67,6 +73,7 @@ const NavBar: FC = () => {
       </div>
 
       <div
+        onClick={closeHamburger}
         ref={overlayElement}
         className={minimize`
           ${!menuOpened ? 'hidden' : ''}
