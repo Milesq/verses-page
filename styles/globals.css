@@ -24,3 +24,7 @@ html {
 * {
   transition: background-color .2s ease;
 }
+
+.pretty-input {
+  @apply w-full appearance-none my-3 border-solid border border-input hover:border-input-darken rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring dark:text-gray-50 dark:bg-gray-700 dark:border-gray-500 dark:hover:border-input-darkhover;
+}
