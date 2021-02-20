@@ -23,9 +23,12 @@
   },
   "plugins": ["react", "@typescript-eslint", "prettier"],
   "rules": {
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "warn"
+    ],
     "prettier/prettier": "error",
     "prefer-const": "warn",
-    "no-unused-vars": "warn",
     "no-console": "off",
     "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],
     "react/react-in-jsx-scope": "off",
