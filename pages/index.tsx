@@ -6,6 +6,7 @@ import Ripples from 'react-ripples'
 import reactSelectThemedStyle from '../styles/react-select-themed'
 import allBooks from '../scripts/books.json'
 import BookData from '../scripts/BookData'
+import Button from '../components/Button'
 
 const Home: FC = () => {
   const { locale } = useRouter()
@@ -39,34 +40,8 @@ const Home: FC = () => {
         type="text"
       />
 
-      <div
-        className="
-          float-right
-          rounded-full
-          overflow-hidden
-        "
-      >
-        <Ripples>
-          <button
-            className="
-              transition
-              duration-150
-              bg-green-600
-              hover:bg-green-500
-              dark:hover:bg-green-700
-              shadow
-              hover:shadow-md
-              text-white
-              px-3 py-2
-              rounded-full
-              focus:outline-none
-            "
-            type="submit"
-          >
-            Generuj
-          </button>
-        </Ripples>
-      </div>
+      <Button>Generuj</Button>
+
       <div style={{ height: '200vh' }} className="dark:text-gray-50">
         ok
       </div>
