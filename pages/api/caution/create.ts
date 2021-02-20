@@ -39,7 +39,10 @@ export default async (req: NowRequest, res: NowResponse) => {
     let why: string
 
     if (err instanceof ValidationError) why = err.message
-    else why = 'db error'
+    else {
+      why = 'db error'
+      console.warn(err)
+    }
 
     return res.status(200).send({ error: why })
   }
