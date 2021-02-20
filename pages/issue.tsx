@@ -63,6 +63,7 @@ const Issue: FC = () => {
 
         <textarea
           name="content"
+          autoComplete="off"
           ref={register({ required: true, minLength: 3 })}
           className="pretty-input"
           rows={10}
