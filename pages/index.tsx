@@ -4,7 +4,7 @@ import type { FC } from 'react'
 import Select from 'react-select'
 import reactSelectThemedStyle from '../styles/react-select-themed'
 import allBooks from '../scripts/books.json'
-import BookData from '../scripts/BookData'
+import { BookData } from '../scripts/Books'
 import Button from '../components/Button'
 
 const Home: FC = () => {

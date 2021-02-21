@@ -2,16 +2,11 @@ import { writeFileSync } from 'fs'
 import * as puppeteer from 'puppeteer'
 import config from './config'
 import { bookNormalize } from './utils'
-import BookData from './BookData'
+import { Books } from './Books'
 
 async function goToBible(page: puppeteer.Page): Promise<void> {
   await page.click(config.SELECTOR.READ_BIBLE)
   await page.waitForNavigation()
-}
-
-interface Books {
-  api: string
-  data: BookData[]
 }
 
 async function getBooks(lang: string): Promise<Books> {
