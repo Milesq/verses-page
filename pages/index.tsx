@@ -9,7 +9,7 @@ import Button from '../components/Button'
 
 const Home: FC = () => {
   const { locale } = useRouter()
-  const currentLang: BookData[] = allBooks[locale]
+  const currentLang: BookData[] = allBooks[locale].data
 
   const currentBooks = currentLang.map(({ name, path }) => ({
     label: name,
