@@ -88,7 +88,7 @@ export const stringifyError = (
     : messageGetter
 }
 
-export default (
+const makeError = (
   name: Keys,
   lang: Languages = 'en',
   ...args: any
@@ -104,3 +104,5 @@ export default (
     error,
   }
 }
+
+export default makeError
