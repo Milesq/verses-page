@@ -1,12 +1,3 @@
-export type Languages = 'pl' | 'en'
-
-export type Message = string | ((...args: any) => string)
-
-export interface ErrorsData {
-  code: number
-  message: Record<Languages, Message>
-}
-
 export type Errors =
   | 'unkown'
   | 'quoteExceeded'
@@ -17,51 +8,53 @@ export type Errors =
   | 'unknownBook'
   | 'unknownVerseOrChapter'
 
-export const errors: Record<Errors, ErrorsData> = {
+export type Languages = 'pl' | 'en'
+
+export type Message = string | ((...args: any) => string)
+
+export interface ErrorsData {
+  code: keyof Errors
+  message: Record<Languages, Message>
+}
+
+export const errors: Record<Errors, Omit<ErrorsData, 'code'>> = {
   unkown: {
-    code: -1,
     message: {
       en: arg => arg,
       pl: arg => arg,
     },
   },
   quoteExceeded: {
-    code: 0,
     message: {
       en: (times, per) => `You can report only ${times} cautions in ${per}`,
       pl: `Wysłałeś maksymalną liczbę uwag, poczekaj chwilę zanim wyślesz kolejne`,
     },
   },
   invalidBody: {
-    code: 1,
     message: {
       en: 'You must send valid body',
       pl: '',
     },
   },
   DBError: {
-    code: 2,
     message: {
       en: 'database error',
       pl: 'Problem z bazą danych',
     },
   },
   secondGreaterThanFirst: {
-    code: 3,
     message: {
       en: 'second verse cannot be lower than beging verse',
       pl: 'Początkowy werset musi być mniejszy niż drugi',
     },
   },
   tooManyVerses: {
-    code: 4,
     message: {
       en: 'you can generate maximum 4 verses at one time',
       pl: 'Możesz wygenerować maksymalnie 4 wersety naraz',
     },
   },
   unknownBook: {
-    code: 5,
     message: {
       en: 'unknown book',
       pl:
@@ -69,7 +62,6 @@ export const errors: Record<Errors, ErrorsData> = {
     },
   },
   unknownVerseOrChapter: {
-    code: 6,
     message: {
       en: 'cannot find specified verse',
       pl: 'Podany werset nie istnieje',
@@ -80,8 +72,20 @@ export const errors: Record<Errors, ErrorsData> = {
 export type Keys = keyof typeof errors
 
 export interface ErrorData {
-  code: number
+  code: string
   error: string
+}
+
+export const stringifyError = (
+  key: Keys,
+  lang: Languages = 'pl',
+  ...args: any
+) => {
+  const messageGetter = errors[key].message[lang]
+
+  return typeof messageGetter === 'function'
+    ? messageGetter(...args)
+    : messageGetter
 }
 
 export default (
@@ -89,14 +93,14 @@ export default (
   lang: Languages = 'en',
   ...args: any
 ): ErrorData => {
-  const { code, message } = errors[name]
+  const { message } = errors[name]
   const messageGetter = message[lang]
 
   const error =
     typeof messageGetter === 'function' ? messageGetter(...args) : messageGetter
 
   return {
-    code,
+    code: name,
     error,
   }
 }

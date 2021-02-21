@@ -2,6 +2,7 @@ import Head from 'next/head'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import Button from '../components/Button'
+import { Keys as ErrorKeys, stringifyError } from '../errors'
 
 interface Inputs {
   contact?: string
@@ -11,6 +12,7 @@ interface Inputs {
 type CautionResponse = Partial<{
   ok: boolean
   error: string
+  code: ErrorKeys
 }>
 
 const Issue: FC = () => {
@@ -24,10 +26,9 @@ const Issue: FC = () => {
     }).then(res => res.json())
 
     if (!resp.ok) {
+      const error = stringifyError(resp.code)
       // eslint-disable-next-line no-alert
-      alert(
-        `Wysłanie twojej wskazówki nie powiodło się z powodu: ${resp.error}`
-      )
+      alert(`Wysłanie twojej wskazówki nie powiodło się z powodu: ${error}`)
     } else {
       reset()
       // eslint-disable-next-line no-alert
