@@ -93,7 +93,10 @@ const Home: FC = () => {
           ref={register({
             required: true,
             pattern: areChaptersAndVerseValid,
-            setValueAs(chapterData: string): ChapterData {
+            setValueAs(chapterData: string): ChapterData | string {
+              if (!areChaptersAndVerseValid.test(chapterData))
+                return chapterData
+
               return areChaptersAndVerseValid.exec(chapterData)
                 .groups as ChapterData
             },
