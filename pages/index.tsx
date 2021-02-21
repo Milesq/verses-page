@@ -2,12 +2,16 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import type { FC } from 'react'
 import Select from 'react-select'
+import { useForm, Controller } from 'react-hook-form'
 import reactSelectThemedStyle from '../styles/react-select-themed'
 import allBooks from '../scripts/books.json'
 import { BookData } from '../scripts/Books'
 import Button from '../components/Button'
 
+type ChapterData = Record<'chapter' | 'begVerse' | 'endVerse', string>
+
 const Home: FC = () => {
+  const areChaptersAndVerseValid = /^(?<chapter>\d+):(?<begVerse>\d+)(-(?<endVerse>\d+))?$/
   const { locale } = useRouter()
   const currentLang: BookData[] = allBooks[locale].data
 
@@ -16,30 +20,60 @@ const Home: FC = () => {
     value: path,
   }))
 
+  const { register, handleSubmit, errors, control } = useForm()
   return (
     <>
       <Head>
         <title>Verses - generowanie plansz z wersetami</title>
       </Head>
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label htmlFor="react-select-book" />
-      <Select
-        styles={reactSelectThemedStyle}
-        aria-label=""
-        placeholder="Wyszukaj księgę"
-        id="react-select-book"
-        instanceId="react-select-book"
-        options={currentBooks}
-      />
 
-      <input
-        placeholder="Rozdział i werset (Przykład 30:2)"
-        className="pretty-input"
-        autoComplete="off"
-        type="text"
-      />
+      <form
+        onSubmit={handleSubmit(console.log)}
+        className={errors.book && 'error'}
+      >
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+        <label htmlFor="react-select-book" />
+        <Controller
+          defaultValue=""
+          name="book"
+          control={control}
+          rules={{
+            validate: book => book !== '',
+            setValueAs: book => book.value,
+          }}
+          render={({ onChange, onBlur, value }) => (
+            <Select
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value}
+              styles={reactSelectThemedStyle}
+              aria-label=""
+              placeholder="Wyszukaj księgę"
+              id="react-select-book"
+              instanceId="react-select-book"
+              options={currentBooks}
+            />
+          )}
+        />
 
-      <Button>Generuj</Button>
+        <input
+          placeholder="Rozdział i werset (Przykład 30:2-5)"
+          className={`${errors.chapter && 'error'} pretty-input`}
+          autoComplete="off"
+          type="text"
+          name="chapter"
+          ref={register({
+            required: true,
+            pattern: areChaptersAndVerseValid,
+            setValueAs(chapterData: string): ChapterData {
+              return areChaptersAndVerseValid.exec(chapterData)
+                .groups as ChapterData
+            },
+          })}
+        />
+
+        <Button>Generuj</Button>
+      </form>
 
       <div style={{ height: '200vh' }} className="dark:text-gray-50">
         ok

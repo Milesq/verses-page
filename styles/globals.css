@@ -26,5 +26,17 @@ html {
 }
 
 .pretty-input {
-  @apply w-full appearance-none my-3 border-solid border border-input hover:border-input-darken rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring dark:text-gray-50 dark:bg-gray-700 dark:border-gray-500 dark:hover:border-input-darkhover;
+  @apply w-full appearance-none my-3 border border-solid rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none dark:text-gray-50 dark:bg-gray-700;
+}
+
+.pretty-input.error {
+  @apply border-red-500;
+}
+
+.pretty-input:not(.error) {
+  @apply border-input dark:border-gray-500 dark:hover:border-input-darkhover hover:border-input-darken focus:ring;
+}
+
+.error {
+  --input-border-color: rgb(239, 68, 68);
 }
