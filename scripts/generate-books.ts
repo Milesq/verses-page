@@ -9,7 +9,12 @@ async function goToBible(page: puppeteer.Page): Promise<void> {
   await page.waitForNavigation()
 }
 
-async function getBooks(lang: string): Promise<BookData[]> {
+interface Books {
+  api: string
+  data: BookData[]
+}
+
+async function getBooks(lang: string): Promise<Books> {
   const browser = await puppeteer.launch({
     headless: false,
   })
@@ -17,10 +22,11 @@ async function getBooks(lang: string): Promise<BookData[]> {
   const page = await browser.newPage()
   await page.goto(new URL(config.API) + lang)
   await goToBible(page)
+  const api = page.url()
 
   const booksContainer = await page.$('.booksContainer')
   const booksElements = await booksContainer.$$('.bibleBook')
-  const names = await Promise.all(
+  const names: string[] = await Promise.all(
     booksElements.map(container =>
       container
         .$('.fullName')
@@ -29,17 +35,24 @@ async function getBooks(lang: string): Promise<BookData[]> {
   )
 
   await browser.close()
-  return names.map(book => ({
+  const data = names.map(book => ({
     name: book,
     path: bookNormalize(book),
   }))
+
+  return {
+    data,
+    api,
+  }
 }
 
 const language = process.argv[2] || 'en'
 
-getBooks(language).then(async names => {
+getBooks(language).then(async ({ data: names, api }) => {
   const languages = await import(config.DATA_FILE).catch(() => ({}))
-  languages[language] = names
+  languages[language] = {}
+  languages[language].data = names
+  languages[language].api = api
 
   const json = JSON.stringify(languages, null, 2)
 
