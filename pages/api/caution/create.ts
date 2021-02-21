@@ -40,7 +40,7 @@ export default async (req: NowRequest, res: NowResponse) => {
 
     if (err instanceof ValidationError) why = err.message
     else {
-      why = 'db error'
+      why = 'database error'
       console.warn(err)
     }
 
