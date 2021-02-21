@@ -91,15 +91,18 @@ export default async (req: NowRequest, res: NowResponse) => {
     await prisma.$disconnect()
   } catch (err) {
     let error: ErrorData
+    let code: number
 
     if (err instanceof ValidationError) {
       error = errors('unkown', 'en', err.message)
+      code = 400
     } else {
       error = errors('DBError')
+      code = 500
       console.warn(err)
     }
 
-    return res.status(200).send(error)
+    return res.status(code).send(error)
   }
 
   return res.status(200).json({ ok: true })
