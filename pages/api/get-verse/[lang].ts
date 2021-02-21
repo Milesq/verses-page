@@ -1,40 +1,78 @@
 import type { NowRequest, NowResponse } from '@vercel/node'
 import axios from 'axios'
-import DomParser from 'dom-parser'
+import DomParser, { Node } from 'dom-parser'
+import {
+  object,
+  validate,
+  string,
+  tuple,
+  ValidationError,
+} from '@typeofweb/schema'
 import books from '../../../scripts/books.json'
 import { Books } from '../../../scripts/Books'
 
 const parser = new DomParser()
 
-function extractText(node) {
+interface Verse {
+  book: string
+  chapter: string
+  verses: [string, string]
+}
+
+const verseQueryValidator = validate(
+  object({
+    lang: string(),
+    book: string(),
+    chapter: string(),
+    verses: tuple([string(), string()]),
+  })
+)
+
+function extractText(node: Node) {
   return node.childNodes[0].childNodes
     .map(e => e.outerHTML)
     .filter(e => !e.startsWith('<'))
     .join('')
 }
 
-async function getVerse(p) {
-  const [name, chapter, paragraph] = p.replace(' ', ':', 1).split(':')
+async function getVerse(endpoint: string, { book, chapter, verses }: Verse) {
+  const { data: resp } = await axios.get([endpoint, book, chapter].join('/'))
 
-  let { data } = await axios.get([API, name, chapter].join('/'))
+  const document = parser.parseFromString(resp)
+  const bibleText = document.getElementById('bibleText')
 
-  const document = parser.parseFromString(data)
-  data = document.getElementById('bibleText')
-
-  data = data
+  const data = bibleText
     .getElementsByClassName('verse')
-    .find(el => el.attributes[1].value.endsWith(paragraph))
+    .find(el => (el.attributes[1] as any).value.endsWith(verses[0]))
 
   return extractText(data)
 }
 
 export default async (req: NowRequest, res: NowResponse): Promise<any> => {
-  const { lang } = req.query
-  const current: Books | undefined = books[lang as string]
+  try {
+    const { lang, book, chapter, verses } = verseQueryValidator(req.query)
 
-  if (!current) {
-    return res.status(404).json({ error: 'Unknown language' })
+    const current: Books | undefined = books[lang]
+
+    const found = current.data.find(({ path }) => path === book)
+
+    if (found === undefined) {
+      return res.status(400).json({ error: 'Unknown book' })
+    }
+
+    const verseText = await getVerse(current.api, {
+      book,
+      chapter,
+      verses: verses as [string, string],
+    })
+
+    return res.json({ data: verseText })
+  } catch (err) {
+    if (err instanceof ValidationError) {
+      return res.status(400).json({ error: err.details })
+    }
+
+    console.log(err)
+    return res.status(500).json({ error: 'Unknown error' })
   }
-
-  return res.json({ data: current.api })
 }
