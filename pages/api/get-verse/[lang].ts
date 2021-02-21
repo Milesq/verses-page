@@ -84,13 +84,17 @@ export default async (req: NowRequest, res: NowResponse): Promise<any> => {
       return err('Unknown book')
     }
 
-    const verseText = await getVerses(current.api, {
-      book,
-      chapter,
-      verses: [begVerse, endVerse],
-    })
+    try {
+      const verseText = await getVerses(current.api, {
+        book,
+        chapter,
+        verses: [begVerse, endVerse],
+      })
 
-    return res.json({ data: verseText })
+      return res.json({ data: verseText })
+    } catch {
+      return err('cannot find specified verse')
+    }
   } catch (error) {
     if (error instanceof ValidationError) {
       return err(error.details.toString())
