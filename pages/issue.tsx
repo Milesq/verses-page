@@ -19,6 +19,7 @@ const Issue: FC = () => {
   const sendCaution: (data: Inputs) => Promise<void> = async data => {
     const resp: CautionResponse = await fetch('/api/caution/create', {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     }).then(res => res.json())
 

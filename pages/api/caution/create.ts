@@ -8,10 +8,8 @@ import {
   string,
   object,
   validate,
-  TypeOf,
   ValidationError,
 } from '@typeofweb/schema'
-import { parseJsonSafe } from '../../../utils'
 
 interface RateLimitOptions {
   times: number
@@ -59,6 +57,11 @@ const payloadSchema = object({
 const validator = validate(payloadSchema)
 
 export default async (req: NowRequest, res: NowResponse) => {
+  if (typeof req.body !== 'object') {
+    const error = 'You must send valid json'
+    return res.status(400).json({ error })
+  }
+
   const inQuote = rateLimit(req, res, {
     times: 10,
     per: '30m',
@@ -68,13 +71,8 @@ export default async (req: NowRequest, res: NowResponse) => {
     return
   }
 
-  const body = parseJsonSafe<TypeOf<typeof payloadSchema>>(req.body)
-  if (body === null) {
-    return res.status(400).send({ error: 'The body is not valid JSON' })
-  }
-
   try {
-    const { contact, content } = validator(body)
+    const { contact, content } = validator(req.body)
     const prisma = new PrismaClient()
 
     await prisma.caution.create({
