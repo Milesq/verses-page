@@ -10,6 +10,7 @@ import {
 } from '@typeofweb/schema'
 import books from '../../../scripts/books.json'
 import { Books } from '../../../scripts/Books'
+import makeError, { ErrorData } from '../../../errors'
 
 const parser = new DomParser()
 
@@ -62,18 +63,18 @@ async function getVerses(endpoint: string, { book, chapter, verses }: Verse) {
 }
 
 export default async (req: NowRequest, res: NowResponse): Promise<any> => {
-  const err = (error: string, code: number = 400) =>
-    res.status(code).json({ error })
+  const err = (error: ErrorData, code: number = 400) =>
+    res.status(code).json(error)
 
   try {
     const { lang, book, chapter, verses } = verseQueryValidator(req.query)
     const [begVerse, endVerse] = verses.map(el => parseInt(el, 10))
     if (begVerse > endVerse) {
-      return err('second verse cannot be lower than beging verse')
+      return err(makeError('secondGreaterThanFirst'))
     }
 
     if (endVerse - begVerse > 4) {
-      return err('You can generate maximum 4 verses at one time')
+      return err(makeError('tooManyVerses'))
     }
 
     const current: Books | undefined = books[lang]
@@ -81,7 +82,7 @@ export default async (req: NowRequest, res: NowResponse): Promise<any> => {
     const found = current.data.find(({ path }) => path === book)
 
     if (found === undefined) {
-      return err('Unknown book')
+      return err(makeError('unknownBook'))
     }
 
     try {
@@ -93,14 +94,14 @@ export default async (req: NowRequest, res: NowResponse): Promise<any> => {
 
       return res.json({ data: verseText })
     } catch {
-      return err('cannot find specified verse')
+      return err(makeError('unknownVerseOrChapter'))
     }
   } catch (error) {
     if (error instanceof ValidationError) {
-      return err(error.details.toString())
+      return err(makeError('unkown', 'en', error.details.toString()))
     }
 
     console.warn(error)
-    return err('Unknown error', 500)
+    return err(makeError('unkown', 'en', 'Unknown error'), 500)
   }
 }

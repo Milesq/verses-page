@@ -10,6 +10,7 @@ import {
   validate,
   ValidationError,
 } from '@typeofweb/schema'
+import errors, { ErrorData } from '../../../errors'
 
 interface RateLimitOptions {
   times: number
@@ -26,9 +27,14 @@ function rateLimit(
   sentCautions += 1
 
   if (sentCautions > times) {
-    const error = `You can report only 10 cautions in ${ms(perMs, {
-      long: true,
-    })}`
+    const error = errors(
+      'quoteExceeded',
+      'en',
+      10,
+      ms(perMs, {
+        long: true,
+      })
+    )
 
     res.status(429).json({ error })
     return false
@@ -58,8 +64,8 @@ const validator = validate(payloadSchema)
 
 export default async (req: NowRequest, res: NowResponse) => {
   if (typeof req.body !== 'object') {
-    const error = 'You must send valid json'
-    return res.status(400).json({ error })
+    const error = errors('invalidBody')
+    return res.status(400).json(error)
   }
 
   const inQuote = rateLimit(req, res, {
@@ -84,15 +90,16 @@ export default async (req: NowRequest, res: NowResponse) => {
 
     await prisma.$disconnect()
   } catch (err) {
-    let why: string
+    let error: ErrorData
 
-    if (err instanceof ValidationError) why = err.message
-    else {
-      why = 'database error'
+    if (err instanceof ValidationError) {
+      error = errors('unkown', 'en', err.message)
+    } else {
+      error = errors('DBError')
       console.warn(err)
     }
 
-    return res.status(200).send({ error: why })
+    return res.status(200).send(error)
   }
 
   return res.status(200).json({ ok: true })
