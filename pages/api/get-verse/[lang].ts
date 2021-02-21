@@ -16,7 +16,7 @@ const parser = new DomParser()
 interface Verse {
   book: string
   chapter: string
-  verses: [string, string]
+  verses: [number, number]
 }
 
 const verseQueryValidator = validate(
@@ -35,22 +35,45 @@ function extractText(node: Node) {
     .join('')
 }
 
-async function getVerse(endpoint: string, { book, chapter, verses }: Verse) {
+async function getVerses(endpoint: string, { book, chapter, verses }: Verse) {
   const { data: resp } = await axios.get([endpoint, book, chapter].join('/'))
 
   const document = parser.parseFromString(resp)
-  const bibleText = document.getElementById('bibleText')
-
-  const data = bibleText
+  const versesElement = document
+    .getElementById('bibleText')
     .getElementsByClassName('verse')
-    .find(el => (el.attributes[1] as any).value.endsWith(verses[0]))
 
-  return extractText(data)
+  let verseText = ''
+
+  const getOneVerse = (verse: any): string => {
+    const node = versesElement.find(el =>
+      (el.attributes[1] as any).value.endsWith(verse)
+    )
+
+    return extractText(node)
+  }
+
+  // eslint-disable-next-line no-plusplus
+  for (let i = verses[0]; i <= verses[1]; i++) {
+    verseText += getOneVerse(i)
+  }
+
+  return verseText.trim()
 }
 
 export default async (req: NowRequest, res: NowResponse): Promise<any> => {
   try {
     const { lang, book, chapter, verses } = verseQueryValidator(req.query)
+    const [begVerse, endVerse] = verses.map(el => parseInt(el, 10))
+    if (begVerse > endVerse) {
+      const error = 'second verse cannot be lower than beging verse'
+      return res.status(400).json({ error })
+    }
+
+    if (endVerse - begVerse > 4) {
+      const error = 'You can generate maximum 4 verses at one time'
+      return res.status(400).json({ error })
+    }
 
     const current: Books | undefined = books[lang]
 
@@ -60,10 +83,10 @@ export default async (req: NowRequest, res: NowResponse): Promise<any> => {
       return res.status(400).json({ error: 'Unknown book' })
     }
 
-    const verseText = await getVerse(current.api, {
+    const verseText = await getVerses(current.api, {
       book,
       chapter,
-      verses: verses as [string, string],
+      verses: [begVerse, endVerse],
     })
 
     return res.json({ data: verseText })
