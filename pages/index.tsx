@@ -3,6 +3,7 @@ import Head from 'next/head'
 import type { FC } from 'react'
 import Select from 'react-select'
 import { useForm, Controller } from 'react-hook-form'
+import Swal from 'sweetalert2'
 import reactSelectThemedStyle from '../styles/react-select-themed'
 import allBooks from '../scripts/books.json'
 import { BookData } from '../scripts/Books'
@@ -47,8 +48,7 @@ const Home: FC = () => {
       downloadImage(data)
     } else {
       const error = stringifyError(code)
-      // eslint-disable-next-line no-alert
-      alert(error)
+      Swal.fire('Oops...', error, 'error')
     }
   }
 

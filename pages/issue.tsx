@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
+import Swal from 'sweetalert2'
 import Button from '../components/Button'
 import { Keys as ErrorKeys, stringifyError } from '../errors'
 
@@ -27,12 +28,14 @@ const Issue: FC = () => {
 
     if (!resp.ok) {
       const error = stringifyError(resp.code)
-      // eslint-disable-next-line no-alert
-      alert(`Wysłanie twojej wskazówki nie powiodło się z powodu: ${error}`)
+      Swal.fire('Wysłanie twojej wskazówki nie powiodło się', error, 'error')
     } else {
       reset()
-      // eslint-disable-next-line no-alert
-      alert('Pomyślnie wysłano wskazówkę. Dziękuję :-)')
+      Swal.fire(
+        'Pomyślnie wysłano wskazówkę',
+        'Dzięki za feedback :-)',
+        'success'
+      )
     }
   }
 

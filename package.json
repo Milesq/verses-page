@@ -29,6 +29,7 @@
     "react-ripples": "^2.2.1",
     "react-select": "^4.1.0",
     "sass": "^1.32.8",
+    "sweetalert2": "^10.15.5",
     "tailwindcss": "^2.0.3"
   },
   "devDependencies": {
