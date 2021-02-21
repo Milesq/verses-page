@@ -21,16 +21,36 @@ const Home: FC = () => {
   }))
 
   const { register, handleSubmit, errors, control } = useForm()
+
+  interface BookFormData {
+    book: string
+    chapter: ChapterData
+  }
+
+  async function submit({
+    book,
+    chapter: { chapter, begVerse, endVerse },
+  }: BookFormData) {
+    const params = new URLSearchParams()
+    params.append('book', book)
+    params.append('chapter', chapter)
+    params.append('verses', begVerse)
+    params.append('verses', endVerse || begVerse)
+
+    const api = `/api/get-verse/${locale}/?${params.toString()}`
+
+    const verse = await fetch(api).then(r => r.text())
+
+    console.log(verse)
+  }
+
   return (
     <>
       <Head>
         <title>Verses - generowanie plansz z wersetami</title>
       </Head>
 
-      <form
-        onSubmit={handleSubmit(console.log)}
-        className={errors.book && 'error'}
-      >
+      <form onSubmit={handleSubmit(submit)} className={errors.book && 'error'}>
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label htmlFor="react-select-book" />
         <Controller
