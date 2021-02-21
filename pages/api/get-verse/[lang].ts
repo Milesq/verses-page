@@ -62,17 +62,18 @@ async function getVerses(endpoint: string, { book, chapter, verses }: Verse) {
 }
 
 export default async (req: NowRequest, res: NowResponse): Promise<any> => {
+  const err = (error: string, code: number = 400) =>
+    res.status(code).json({ error })
+
   try {
     const { lang, book, chapter, verses } = verseQueryValidator(req.query)
     const [begVerse, endVerse] = verses.map(el => parseInt(el, 10))
     if (begVerse > endVerse) {
-      const error = 'second verse cannot be lower than beging verse'
-      return res.status(400).json({ error })
+      return err('second verse cannot be lower than beging verse')
     }
 
     if (endVerse - begVerse > 4) {
-      const error = 'You can generate maximum 4 verses at one time'
-      return res.status(400).json({ error })
+      return err('You can generate maximum 4 verses at one time')
     }
 
     const current: Books | undefined = books[lang]
@@ -80,7 +81,7 @@ export default async (req: NowRequest, res: NowResponse): Promise<any> => {
     const found = current.data.find(({ path }) => path === book)
 
     if (found === undefined) {
-      return res.status(400).json({ error: 'Unknown book' })
+      return err('Unknown book')
     }
 
     const verseText = await getVerses(current.api, {
@@ -90,12 +91,12 @@ export default async (req: NowRequest, res: NowResponse): Promise<any> => {
     })
 
     return res.json({ data: verseText })
-  } catch (err) {
-    if (err instanceof ValidationError) {
-      return res.status(400).json({ error: err.details })
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      return err(error.details.toString())
     }
 
-    console.log(err)
-    return res.status(500).json({ error: 'Unknown error' })
+    console.warn(error)
+    return err('Unknown error', 500)
   }
 }
