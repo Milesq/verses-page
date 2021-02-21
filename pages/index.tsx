@@ -7,6 +7,8 @@ import reactSelectThemedStyle from '../styles/react-select-themed'
 import allBooks from '../scripts/books.json'
 import { BookData } from '../scripts/Books'
 import Button from '../components/Button'
+import { stringifyError } from '../errors'
+import { downloadImage } from '../utils'
 
 type ChapterData = Record<'chapter' | 'begVerse' | 'endVerse', string>
 
@@ -39,9 +41,15 @@ const Home: FC = () => {
 
     const api = `/api/get-verse/${locale}/?${params.toString()}`
 
-    const verse = await fetch(api).then(r => r.text())
+    const { data, code } = await fetch(api).then(r => r.json())
 
-    console.log(verse)
+    if (data !== undefined) {
+      downloadImage(data)
+    } else {
+      const error = stringifyError(code)
+      // eslint-disable-next-line no-alert
+      alert(error)
+    }
   }
 
   return (
