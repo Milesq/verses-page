@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import { FC, useRef } from 'react'
+import { FC, useState } from 'react'
 import Select from 'react-select'
 import { useForm, Controller } from 'react-hook-form'
+import { LinearProgress } from '@rmwc/linear-progress'
 import Swal from 'sweetalert2'
 import reactSelectThemedStyle from '../styles/react-select-themed'
 import allBooks from '../scripts/books.json'
@@ -24,7 +25,7 @@ const Home: FC = () => {
   }))
 
   const { register, handleSubmit, errors, control } = useForm()
-  const formInProgress = useRef(false)
+  const [isFormInProgress, lockForm] = useState(false)
 
   interface BookFormData {
     book: string
@@ -35,12 +36,11 @@ const Home: FC = () => {
     book,
     chapter: { chapter, begVerse, endVerse },
   }: BookFormData) {
-    if (formInProgress.current) {
+    if (isFormInProgress) {
       return
     }
-    console.log('sent')
 
-    formInProgress.current = true
+    lockForm(true)
 
     const params = new URLSearchParams()
     params.append('book', book)
@@ -59,11 +59,16 @@ const Home: FC = () => {
       Swal.fire('Oops...', error, 'error')
     }
 
-    formInProgress.current = false
+    lockForm(false)
   }
 
   return (
     <>
+      {isFormInProgress && (
+        <div className="w-full fixed top-0 left-0 z-50">
+          <LinearProgress className="w-full" />
+        </div>
+      )}
       <Head>
         <title>Verses - generowanie plansz z wersetami</title>
       </Head>

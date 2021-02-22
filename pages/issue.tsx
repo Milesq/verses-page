@@ -1,7 +1,8 @@
 import Head from 'next/head'
-import { FC, useRef } from 'react'
+import { FC, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import Swal from 'sweetalert2'
+import { LinearProgress } from '@rmwc/linear-progress'
 import Button from '../components/Button'
 import { Keys as ErrorKeys, stringifyError } from '../errors'
 
@@ -18,14 +19,14 @@ type CautionResponse = Partial<{
 
 const Issue: FC = () => {
   const { register, handleSubmit, errors, reset } = useForm<Inputs>()
-  const formInProgress = useRef(false)
+  const [isFormInProgress, lockForm] = useState(false)
 
   const sendCaution: (data: Inputs) => Promise<void> = async data => {
-    if (formInProgress.current) {
+    if (isFormInProgress) {
       return
     }
 
-    formInProgress.current = true
+    lockForm(true)
 
     const resp: CautionResponse = await fetch('/api/caution/create', {
       method: 'POST',
@@ -45,11 +46,17 @@ const Issue: FC = () => {
       )
     }
 
-    formInProgress.current = false
+    lockForm(false)
   }
 
   return (
     <>
+      {isFormInProgress && (
+        <div className="w-full fixed top-0 left-0 z-50">
+          <LinearProgress className="w-full" />
+        </div>
+      )}
+
       <Head>
         <title>Zgłaszanie błędów</title>
       </Head>

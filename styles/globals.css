@@ -13,12 +13,24 @@
   --input-text: #E5E7EB;
   --input-bg-focus: #111827;
   --input-border-color: #6B7280;
+
+  --mdc-theme-primary: #6B7280;
+}
+
+.dark .mdc-linear-progress__buffer {
+  @apply bg-gray-700;
+}
+
+.mdc-linear-progress__buffer.mdc-linear-progress--indeterminate {
+  background: white;
 }
 
 html {
   --input-bg-hover: #deebff;
   --input-bg-focus: #b2d4ff;
   --input-border-color: #ccc;
+
+  --mdc-theme-primary: #6dd653;
 }
 
 * {

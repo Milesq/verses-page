@@ -1,6 +1,7 @@
 import NavBar from '../components/Nav/Bar'
 import '../styles/globals.css'
 import '../styles/NavBar.sass'
+import '../node_modules/@material/linear-progress/dist/mdc.linear-progress.css'
 
 function MyApp({ Component, pageProps }) {
   return (

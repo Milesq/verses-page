@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@prisma/client": "^2.17.0",
+    "@rmwc/linear-progress": "^6.1.4",
     "@typeofweb/schema": "^0.6.1",
     "@types/react-select": "^4.0.13",
     "axios": "^0.21.1",
