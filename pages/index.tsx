@@ -121,10 +121,6 @@ const Home: FC = () => {
         <Button>Generuj</Button>
       </form>
 
-      <div style={{ height: '200vh' }} className="dark:text-gray-50">
-        ok
-      </div>
-
       <div className="clear-both" />
     </>
   )
