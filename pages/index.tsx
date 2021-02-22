@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import type { FC } from 'react'
+import { FC, useRef } from 'react'
 import Select from 'react-select'
 import { useForm, Controller } from 'react-hook-form'
 import Swal from 'sweetalert2'
@@ -24,6 +24,7 @@ const Home: FC = () => {
   }))
 
   const { register, handleSubmit, errors, control } = useForm()
+  const formInProgress = useRef(false)
 
   interface BookFormData {
     book: string
@@ -34,6 +35,13 @@ const Home: FC = () => {
     book,
     chapter: { chapter, begVerse, endVerse },
   }: BookFormData) {
+    if (formInProgress.current) {
+      return
+    }
+    console.log('sent')
+
+    formInProgress.current = true
+
     const params = new URLSearchParams()
     params.append('book', book)
     params.append('chapter', chapter)
@@ -50,6 +58,8 @@ const Home: FC = () => {
       const error = stringifyError(code)
       Swal.fire('Oops...', error, 'error')
     }
+
+    formInProgress.current = false
   }
 
   return (

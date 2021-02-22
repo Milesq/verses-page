@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import type { FC } from 'react'
+import { FC, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import Swal from 'sweetalert2'
 import Button from '../components/Button'
@@ -18,8 +18,15 @@ type CautionResponse = Partial<{
 
 const Issue: FC = () => {
   const { register, handleSubmit, errors, reset } = useForm<Inputs>()
+  const formInProgress = useRef(false)
 
   const sendCaution: (data: Inputs) => Promise<void> = async data => {
+    if (formInProgress.current) {
+      return
+    }
+
+    formInProgress.current = true
+
     const resp: CautionResponse = await fetch('/api/caution/create', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -37,6 +44,8 @@ const Issue: FC = () => {
         'success'
       )
     }
+
+    formInProgress.current = false
   }
 
   return (
