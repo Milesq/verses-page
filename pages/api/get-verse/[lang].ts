@@ -37,7 +37,9 @@ function extractText(node: Node) {
 }
 
 async function getVerses(endpoint: string, { book, chapter, verses }: Verse) {
-  const { data: resp } = await axios.get([endpoint, book, chapter].join('/'))
+  const { data: resp } = await axios.get(
+    [endpoint, encodeURIComponent(book), chapter].join('/')
+  )
 
   const document = parser.parseFromString(resp)
   const versesElement = document
