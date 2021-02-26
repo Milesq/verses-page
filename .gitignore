@@ -13,6 +13,7 @@ node_modules
 /out/
 
 .env
+.exe
 
 # production
 /build
