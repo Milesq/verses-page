@@ -100,7 +100,7 @@ export default async (req: NowRequest, res: NowResponse): Promise<any> => {
     }
   } catch (error) {
     if (error instanceof ValidationError) {
-      return err(makeError('unkown', 'en', error.details.toString()))
+      return err(makeError('unkown', 'en', JSON.stringify(error.details)))
     }
 
     console.warn(error)
