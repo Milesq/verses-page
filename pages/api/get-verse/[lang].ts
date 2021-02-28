@@ -30,10 +30,15 @@ const verseQueryValidator = validate(
 )
 
 function extractText(node: Node) {
-  return node.childNodes[0].childNodes
-    .map(e => e.outerHTML)
-    .filter(e => !e.startsWith('<'))
-    .join('')
+  return node.childNodes
+    .map(el =>
+      el.childNodes
+        ?.map(e => e.outerHTML)
+        .filter(e => !e.startsWith('<'))
+        .join('')
+    )
+    .filter(el => el)
+    .join(' ')
 }
 
 async function getVerses(endpoint: string, { book, chapter, verses }: Verse) {
