@@ -109,7 +109,7 @@ export default async (req: NowRequest, res: NowResponse): Promise<any> => {
         `${found.name} ${chapter}:${begVerse}${
           endVerse !== begVerse ? `-${endVerse}` : ''
         }`,
-        verseText
+        `“${verseText}”`
       )
 
       return res.send(image)
