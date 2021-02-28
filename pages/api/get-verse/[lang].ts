@@ -64,6 +64,17 @@ async function getVerses(endpoint: string, { book, chapter, verses }: Verse) {
   return verseText.trim()
 }
 
+async function createBoard(title: string, verse: string): Promise<Buffer> {
+  const apiUrl = new URL(process.env.IMAGE_API)
+
+  apiUrl.searchParams.append('title', title)
+  apiUrl.searchParams.append('verse', verse)
+
+  const resp = await fetch(apiUrl.href)
+
+  return Buffer.from(await resp.arrayBuffer())
+}
+
 export default async (req: NowRequest, res: NowResponse): Promise<any> => {
   const err = (error: ErrorData, code: number = 400) =>
     res.status(code).json(error)
@@ -94,7 +105,14 @@ export default async (req: NowRequest, res: NowResponse): Promise<any> => {
         verses: [begVerse, endVerse],
       })
 
-      return res.json({ data: verseText })
+      const image = await createBoard(
+        `${found.name} ${chapter}:${begVerse}${
+          endVerse !== begVerse ? `-${endVerse}` : ''
+        }`,
+        verseText
+      )
+
+      return res.send(image)
     } catch {
       return err(makeError('unknownVerseOrChapter'))
     }
