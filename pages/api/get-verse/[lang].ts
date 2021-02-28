@@ -105,13 +105,13 @@ export default async (req: NowRequest, res: NowResponse): Promise<any> => {
         verses: [begVerse, endVerse],
       })
 
-      const image = await createBoard(
-        `${found.name} ${chapter}:${begVerse}${
-          endVerse !== begVerse ? `-${endVerse}` : ''
-        }`,
-        `“${verseText}”`
-      )
+      const bookName = `${found.name} ${chapter}:${begVerse}${
+        endVerse !== begVerse ? `-${endVerse}` : ''
+      }`
 
+      const image = await createBoard(bookName, `“${verseText}”`)
+
+      res.setHeader('X-Filename', encodeURIComponent(`${bookName}.png`))
       return res.send(image)
     } catch {
       return err(makeError('unknownVerseOrChapter'))

@@ -10,7 +10,6 @@ import allBooks from '../scripts/books.json'
 import { BookData } from '../scripts/Books'
 import Button from '../components/Button'
 import { stringifyError } from '../errors'
-import { downloadImage } from '../utils'
 
 type ChapterData = Record<'chapter' | 'begVerse' | 'endVerse', string>
 
@@ -50,13 +49,25 @@ const Home: FC = () => {
 
     const api = `/api/get-verse/${locale}/?${params.toString()}`
 
-    const { data, code } = await fetch(api).then(r => r.json())
+    const response = await fetch(api)
 
-    if (data !== undefined) {
-      downloadImage(data)
-    } else {
+    if (response.headers.get('content-type').startsWith('application/json')) {
+      const { code } = await response.json()
       const error = stringifyError(code)
       Swal.fire('Oops...', error, 'error')
+    } else {
+      const filename = decodeURIComponent(response.headers.get('X-Filename'))
+
+      const blob = await response.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.style.display = 'none'
+      a.href = url
+      a.download = filename
+      document.body.appendChild(a)
+
+      a.click()
+      URL.revokeObjectURL(url)
     }
 
     lockForm(false)
