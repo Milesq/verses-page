@@ -5,6 +5,7 @@ import (
 	_ "embed"
 	"fmt"
 	"image"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
@@ -40,12 +41,24 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	dc, err := drawText(templateImage, title, verse)
-	if err != nil {
-		panic(err)
+	cachePath := "./.cache/" + b64(title) + ".png"
+
+	if _, err := os.Stat(cachePath); !os.IsNotExist(err) {
+		file, err := os.Open(cachePath)
+
+		if err == nil {
+			io.Copy(w, file)
+			return
+		}
 	}
 
-	dc.SavePNG(fmt.Sprint("./.cache/", b64(title), ".png"))
+	dc, err := drawText(templateImage, title, verse)
+	if err != nil {
+		fmt.Fprint(w, "Cannot draw text")
+		return
+	}
+
+	dc.SavePNG(cachePath)
 	dc.EncodePNG(w)
 }
 
