@@ -45,6 +45,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
+	dc.SavePNG(fmt.Sprint("./.cache/", b64(title), ".png"))
 	dc.EncodePNG(w)
 }
 
