@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-import type { NowRequest, NowResponse } from '@vercel/node'
+import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { PrismaClient } from '@prisma/client'
 import { serialize } from 'cookie'
 import ms from 'ms'
@@ -18,8 +18,8 @@ interface RateLimitOptions {
 }
 
 function rateLimit(
-  req: NowRequest,
-  res: NowResponse,
+  req: VercelRequest,
+  res: VercelResponse,
   { times, per }: RateLimitOptions
 ) {
   const perMs = ms(per)
@@ -62,7 +62,7 @@ const payloadSchema = object({
 
 const validator = validate(payloadSchema)
 
-export default async (req: NowRequest, res: NowResponse) => {
+export default async (req: VercelRequest, res: VercelResponse) => {
   if (typeof req.body !== 'object') {
     const error = errors('invalidBody')
     return res.status(400).json(error)

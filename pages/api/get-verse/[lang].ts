@@ -1,4 +1,4 @@
-import type { NowRequest, NowResponse } from '@vercel/node'
+import type { VercelRequest, VercelResponse } from '@vercel/node'
 import axios from 'axios'
 import DomParser, { Node } from 'dom-parser'
 import {
@@ -69,18 +69,10 @@ async function getVerses(endpoint: string, { book, chapter, verses }: Verse) {
   return verseText.trim()
 }
 
-async function createBoard(title: string, verse: string): Promise<Buffer> {
-  const apiUrl = new URL(process.env.IMAGE_API)
-
-  apiUrl.searchParams.append('title', title)
-  apiUrl.searchParams.append('verse', verse)
-
-  const resp = await fetch(apiUrl.href)
-
-  return Buffer.from(await resp.arrayBuffer())
-}
-
-export default async (req: NowRequest, res: NowResponse): Promise<any> => {
+export default async (
+  req: VercelRequest,
+  res: VercelResponse
+): Promise<any> => {
   const err = (error: ErrorData, code: number = 400) =>
     res.status(code).json(error)
 
