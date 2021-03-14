@@ -23,6 +23,8 @@ module.exports = {
   variants: {
     extend: {
       textDecoration: ['focus-visible'],
+      backgroundColor: ['disabled'],
+      pointerEvents: ['disabled'],
     },
   },
 }

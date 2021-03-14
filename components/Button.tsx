@@ -1,7 +1,10 @@
 import { PropsWithChildren } from 'react'
 import Ripples from 'react-ripples'
 
-function Button({ children }: PropsWithChildren<{}>) {
+function Button({
+  children,
+  disabled,
+}: PropsWithChildren<{ disabled?: boolean }>) {
   return (
     <div
       className="
@@ -12,7 +15,11 @@ function Button({ children }: PropsWithChildren<{}>) {
     >
       <Ripples>
         <button
+          disabled={disabled}
           className="
+            disabled:bg-gray-400
+            disabled:pointer-events-none
+
             transition
             duration-150
             bg-green-600
