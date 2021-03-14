@@ -29,11 +29,13 @@ const Home: FC = () => {
   interface BookFormData {
     book: string
     chapter: ChapterData
+    'is-verse-editable': boolean
   }
 
   async function submit({
     book,
     chapter: { chapter, begVerse, endVerse },
+    'is-verse-editable': isVerseEditable,
   }: BookFormData) {
     if (isFormInProgress) {
       return
@@ -51,24 +53,7 @@ const Home: FC = () => {
 
     const response = await fetch(api)
 
-    if (response.headers.get('content-type').startsWith('application/json')) {
-      const { code } = await response.json()
-      const error = stringifyError(code)
-      Swal.fire('Oops...', error, 'error')
-    } else {
-      const filename = decodeURIComponent(response.headers.get('X-Filename'))
-
-      const blob = await response.blob()
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.style.display = 'none'
-      a.href = url
-      a.download = filename
-      document.body.appendChild(a)
-
-      a.click()
-      URL.revokeObjectURL(url)
-    }
+    console.log(await response.json())
 
     lockForm(false)
   }
@@ -128,6 +113,19 @@ const Home: FC = () => {
             },
           })}
         />
+
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+        <label className="inline-flex items-center mt-3">
+          <input
+            ref={register()}
+            name="is-verse-editable"
+            type="checkbox"
+            className=" text-orange-600"
+          />
+          <span className="ml-2 text-gray-700">
+            Chcę edytować tekst wersetu
+          </span>
+        </label>
 
         <Button>Generuj</Button>
       </form>

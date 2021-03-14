@@ -102,14 +102,9 @@ export default async (
         verses: [begVerse, endVerse],
       })
 
-      const bookName = `${found.name} ${chapter}:${begVerse}${
-        endVerse !== begVerse ? `-${endVerse}` : ''
-      }`
-
-      const image = await createBoard(bookName, `“${verseText}”`)
-
-      res.setHeader('X-Filename', encodeURIComponent(`${bookName}.png`))
-      return res.send(image)
+      return res.send({
+        data: verseText,
+      })
     } catch {
       return err(makeError('unknownVerseOrChapter'))
     }
