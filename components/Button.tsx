@@ -1,10 +1,12 @@
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, HTMLAttributes } from 'react'
 import Ripples from 'react-ripples'
 
 function Button({
   children,
   disabled,
-}: PropsWithChildren<{ disabled?: boolean }>) {
+  ...props
+}: PropsWithChildren<{ disabled?: boolean }> &
+  HTMLAttributes<HTMLButtonElement>) {
   return (
     <div
       className="
@@ -15,6 +17,7 @@ function Button({
     >
       <Ripples>
         <button
+          {...props}
           disabled={disabled}
           className="
             disabled:bg-gray-400
