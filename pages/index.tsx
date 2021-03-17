@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import { FC, useState } from 'react'
+import { FC, useRef, useState } from 'react'
 import Select from 'react-select'
 import { useForm, Controller } from 'react-hook-form'
 import { LinearProgress } from '@rmwc/linear-progress'
@@ -23,13 +23,33 @@ const Home: FC = () => {
     value: path,
   }))
 
-  const { register, handleSubmit, errors, control } = useForm()
+  const { register, handleSubmit, errors, control, getValues } = useForm()
   const [isFormInProgress, lockForm] = useState(false)
+  const [editableText, setEditableText] = useState(null)
+  const newVerseText = useRef(undefined)
+
+  function getBookName(): string {
+    const {
+      book,
+      chapter: { chapter, begVerse, endVerse },
+    } = getValues()
+
+    return `${book.label} ${chapter}:${begVerse}${
+      endVerse ? `-${endVerse}` : ''
+    }`
+  }
 
   interface BookFormData {
-    book: string
+    book: {
+      value: string
+      label: string
+    }
     chapter: ChapterData
     'is-verse-editable': boolean
+  }
+
+  function createBoard(bookName: string, verse: string) {
+    console.log(bookName, verse)
   }
 
   async function submit({
@@ -44,16 +64,22 @@ const Home: FC = () => {
     lockForm(true)
 
     const params = new URLSearchParams()
-    params.append('book', book)
+    params.append('book', book.value)
     params.append('chapter', chapter)
     params.append('verses', begVerse)
     params.append('verses', endVerse || begVerse)
 
     const api = `/api/get-verse/${locale}/?${params.toString()}`
 
-    const response = await fetch(api)
-
-    console.log(await response.json())
+    const response = await fetch(api).then(r => r.json())
+    if (response.error) {
+      const error = stringifyError(response.code)
+      Swal.fire('Oops...', error, 'error')
+    } else if (!isVerseEditable) {
+      createBoard(getBookName(), response.data)
+    } else {
+      setEditableText(response.data)
+    }
 
     lockForm(false)
   }
@@ -78,7 +104,6 @@ const Home: FC = () => {
           control={control}
           rules={{
             validate: book => book !== '',
-            setValueAs: book => book.value,
           }}
           render={({ onChange, onBlur, value }) => (
             <Select
@@ -127,8 +152,26 @@ const Home: FC = () => {
           </span>
         </label>
 
-        <Button>Generuj</Button>
+        <Button disabled={editableText}>Generuj</Button>
       </form>
+
+      {editableText && (
+        <>
+          <textarea
+            ref={newVerseText}
+            autoComplete="off"
+            className="pretty-input"
+            rows={10}
+            defaultValue={editableText}
+          />
+
+          <Button
+            onClick={() => createBoard(getBookName(), newVerseText.current)}
+          >
+            Gotowe
+          </Button>
+        </>
+      )}
 
       <div className="clear-both" />
     </>
