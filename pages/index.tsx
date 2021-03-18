@@ -55,18 +55,23 @@ const Home: FC = () => {
     )}&verse=${encodeURIComponent(verse)}`
 
     const response = await fetch(apiUrl)
-    const filename = decodeURIComponent(response.headers.get('X-Filename'))
 
-    const blob = await response.blob()
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.style.display = 'none'
-    a.href = url
-    a.download = filename
-    document.body.appendChild(a)
+    if (response.headers.get('content-type').startsWith('application/json')) {
+      Swal.fire('Oops...', 'Brak połączenia z serwerem', 'error')
+    } else {
+      const filename = decodeURIComponent(response.headers.get('X-Filename'))
 
-    a.click()
-    URL.revokeObjectURL(url)
+      const blob = await response.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.style.display = 'none'
+      a.href = url
+      a.download = filename
+      document.body.appendChild(a)
+
+      a.click()
+      URL.revokeObjectURL(url)
+    }
   }
 
   async function submit({
