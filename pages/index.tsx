@@ -48,8 +48,24 @@ const Home: FC = () => {
     'is-verse-editable': boolean
   }
 
-  function createBoard(bookName: string, verse: string) {
-    console.log(bookName, verse)
+  async function createBoard(bookName: string, verse: string) {
+    const apiUrl = `/api/get-verse/board?sign=${encodeURIComponent(
+      bookName
+    )}&verse=${encodeURIComponent(verse)}`
+
+    const response = await fetch(apiUrl)
+    const filename = decodeURIComponent(response.headers.get('X-Filename'))
+
+    const blob = await response.blob()
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.style.display = 'none'
+    a.href = url
+    a.download = filename
+    document.body.appendChild(a)
+
+    a.click()
+    URL.revokeObjectURL(url)
   }
 
   async function submit({
