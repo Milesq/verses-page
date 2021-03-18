@@ -10,6 +10,7 @@ import allBooks from '../scripts/books.json'
 import { BookData } from '../scripts/Books'
 import Button from '../components/Button'
 import { stringifyError } from '../errors'
+import '../node_modules/pretty-checkbox/dist/pretty-checkbox.min.css'
 
 type ChapterData = Record<'chapter' | 'begVerse' | 'endVerse', string>
 
@@ -155,18 +156,22 @@ const Home: FC = () => {
           })}
         />
 
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label className="inline-flex items-center mt-3">
+        <div className="pretty p-default p-curve p-fill p-smooth">
           <input
             ref={register()}
             name="is-verse-editable"
             type="checkbox"
             className=" text-orange-600"
           />
-          <span className="ml-2 text-gray-700">
-            Chcę edytować tekst wersetu
-          </span>
-        </label>
+
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+          <div className="state ml-2 text-gray-700 dark:text-gray-200">
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+            <label className="inline-flex items-center mt-3">
+              Chcę edytować tekst wersetu
+            </label>
+          </div>
+        </div>
 
         <Button disabled={editableText}>Generuj</Button>
       </form>
