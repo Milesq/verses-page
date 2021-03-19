@@ -58,8 +58,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	dc.SavePNG(cachePath)
 	dc.EncodePNG(w)
+	dc.SavePNG(cachePath)
 }
 
 func main() {
