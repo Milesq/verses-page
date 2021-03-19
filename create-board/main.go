@@ -14,9 +14,19 @@ import (
 	"github.com/fogleman/gg"
 )
 
-//go:embed template.png
-var template []byte
-var templateImage image.Image
+var templateImages map[string]image.Image
+
+//go:embed template-raw.png
+var rawTemplate []byte
+
+//go:embed template-sd.png
+var sdTemplate []byte
+
+//go:embed template-hd.png
+var hdTemplate []byte
+
+//go:embed template-fullhd.png
+var fullhdTemplate []byte
 
 func paramExists(params url.Values, value string) bool {
 	v, ok := params[value]
@@ -52,7 +62,21 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	dc, err := drawText(templateImage, title, verse)
+	templateName := "hd"
+
+	if paramExists(params, "quality") {
+		quality := params["quality"]
+		templateName = quality[0]
+	}
+
+	template, templateExists := templateImages[templateName]
+
+	if !templateExists {
+		fmt.Fprint(w, "unknown quality")
+		return
+	}
+
+	dc, err := drawText(template, title, verse)
 	if err != nil {
 		fmt.Fprint(w, "Cannot draw text")
 		return
@@ -62,14 +86,23 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	dc.SavePNG(cachePath)
 }
 
-func main() {
-	img, _, err := image.Decode(bytes.NewReader(template))
+func toImage(binData []byte) image.Image {
+	img, _, err := image.Decode(bytes.NewReader(binData))
 
 	if err != nil {
 		panic(err)
 	}
 
-	templateImage = img
+	return img
+}
+
+func main() {
+	templateImages = map[string]image.Image{
+		"raw":    toImage(rawTemplate),
+		"sd":     toImage(sdTemplate),
+		"hd":     toImage(hdTemplate),
+		"fullhd": toImage(fullhdTemplate),
+	}
 
 	port := "80"
 
