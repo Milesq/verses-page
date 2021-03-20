@@ -1,15 +1,20 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { object, string, validate } from '@typeofweb/schema'
+import { object, optional, string, validate } from '@typeofweb/schema'
 
-async function createBoard(title: string, verse: string): Promise<Buffer> {
+function createBoard(
+  title: string,
+  verse: string,
+  quality: string = 'hd'
+): Promise<Buffer> {
   const apiUrl = new URL(process.env.IMAGE_API)
 
   apiUrl.searchParams.append('title', title)
   apiUrl.searchParams.append('verse', verse)
+  apiUrl.searchParams.append('quality', quality)
 
-  const resp = await fetch(apiUrl.href)
-
-  return Buffer.from(await resp.arrayBuffer())
+  return fetch(apiUrl.href)
+    .then(resp => resp.arrayBuffer())
+    .then(Buffer.from)
 }
 
 export default async (
@@ -20,14 +25,14 @@ export default async (
     object({
       verse: string(),
       sign: string(),
+      quality: optional(string()),
     })
   )
 
   try {
-    const { sign, verse } = verseQueryValidator(req.query)
-    const image = await createBoard(sign, `“${verse}”`)
+    const { sign, verse, quality } = verseQueryValidator(req.query)
+    const image = await createBoard(sign, `“${verse}”`, quality)
 
-    res.setHeader('X-Filename', encodeURIComponent(`${sign}.png`))
     return res.send(image)
   } catch (err) {
     console.log(err)
