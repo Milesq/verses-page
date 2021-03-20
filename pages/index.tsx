@@ -9,6 +9,7 @@ import reactSelectThemedStyle from '../styles/react-select-themed'
 import allBooks from '../scripts/books.json'
 import { BookData } from '../scripts/Books'
 import Button from '../components/Button'
+import ImageControlPanel from '../components/ImageControlPanel'
 import { stringifyError } from '../errors'
 import '../node_modules/pretty-checkbox/dist/pretty-checkbox.min.css'
 
@@ -26,7 +27,9 @@ const Home: FC = () => {
 
   const { register, handleSubmit, errors, control, getValues } = useForm()
   const [isFormInProgress, lockForm] = useState(false)
-  const [editableText, setEditableText] = useState(null)
+  const verseText = useRef('')
+  const [isVerseEditorVisible, setVerseEditorVisibility] = useState(null)
+  const [isControlPanelVisible, setControlPanelVisibility] = useState(false)
   const newVerseText = useRef(undefined)
 
   function getBookName(): string {
@@ -49,31 +52,6 @@ const Home: FC = () => {
     'is-verse-editable': boolean
   }
 
-  async function createBoard(bookName: string, verse: string) {
-    const apiUrl = `/api/get-verse/board?sign=${encodeURIComponent(
-      bookName
-    )}&verse=${encodeURIComponent(verse)}`
-
-    const response = await fetch(apiUrl)
-
-    if (response.headers.get('content-type').startsWith('application/json')) {
-      Swal.fire('Oops...', 'Brak połączenia z serwerem', 'error')
-    } else {
-      const filename = decodeURIComponent(response.headers.get('X-Filename'))
-
-      const blob = await response.blob()
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.style.display = 'none'
-      a.href = url
-      a.download = filename
-      document.body.appendChild(a)
-
-      a.click()
-      URL.revokeObjectURL(url)
-    }
-  }
-
   async function submit({
     book,
     chapter: { chapter, begVerse, endVerse },
@@ -83,7 +61,7 @@ const Home: FC = () => {
       return
     }
 
-    setEditableText(null)
+    setVerseEditorVisibility(false)
     lockForm(true)
 
     const params = new URLSearchParams()
@@ -99,12 +77,26 @@ const Home: FC = () => {
       const error = stringifyError(response.code)
       Swal.fire('Oops...', error, 'error')
     } else if (!isVerseEditable) {
-      createBoard(getBookName(), response.data)
+      verseText.current = response.data
+      setControlPanelVisibility(true)
     } else {
-      setEditableText(response.data)
+      verseText.current = response.data
+      setVerseEditorVisibility(true)
     }
 
     lockForm(false)
+  }
+
+  const controlPanelOptions = {
+    quality: {
+      label: 'Jakość',
+      values: [
+        { label: '480p', value: 'sd' },
+        { label: '720p', value: 'hd' },
+        { label: '1080p', value: 'fullhd' },
+        { label: 'Najwyższa', value: 'raw' },
+      ],
+    },
   }
 
   return (
@@ -182,22 +174,39 @@ const Home: FC = () => {
         <Button>Generuj</Button>
       </form>
 
-      {editableText && (
+      {isVerseEditorVisible && (
         <>
           <textarea
             ref={newVerseText}
             autoComplete="off"
             className="pretty-input"
             rows={10}
-            defaultValue={editableText}
+            defaultValue={verseText.current}
           />
 
           <Button
-            onClick={() => createBoard(getBookName(), newVerseText.current)}
+            // eslint-disable-next-line no-return-assign
+            onClick={() => {
+              verseText.current = newVerseText.current.value
+              setControlPanelVisibility(true)
+            }}
           >
             Gotowe
           </Button>
         </>
+      )}
+
+      {isControlPanelVisible && (
+        <ImageControlPanel
+          controls={controlPanelOptions}
+          getImageRef={({ quality }) =>
+            `/api/get-verse/board?sign=${encodeURIComponent(
+              getBookName()
+            )}&verse=${encodeURIComponent(
+              verseText.current
+            )}&quality=${quality}`
+          }
+        />
       )}
 
       <div className="clear-both" />
