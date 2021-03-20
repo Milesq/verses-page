@@ -136,7 +136,7 @@ func drawText(img image.Image, verse, content string) (*gg.Context, error) {
 
 	xBeg, yBeg = X*2/3, Y*3/4
 	if len(content) > 550 {
-		xBeg, yBeg = X*2/3, Y*5/6
+		yBeg = Y * 5 / 6
 	}
 	dc.DrawString(verse, xBeg, yBeg)
 
