@@ -83,6 +83,7 @@ const Home: FC = () => {
       return
     }
 
+    setEditableText(null)
     lockForm(true)
 
     const params = new URLSearchParams()
@@ -178,7 +179,7 @@ const Home: FC = () => {
           </div>
         </div>
 
-        <Button disabled={editableText}>Generuj</Button>
+        <Button>Generuj</Button>
       </form>
 
       {editableText && (
