@@ -32,6 +32,10 @@ const themedStyle: StylesConfig<Record<string, string>, false> = {
     ...styles,
     backgroundColor: 'var(--input-bg)',
   }),
+  input: styles => ({
+    ...styles,
+    color: 'var(--input-text)',
+  }),
 }
 
 export default themedStyle
