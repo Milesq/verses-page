@@ -113,7 +113,7 @@ func drawText(img image.Image, verse, content string) (*gg.Context, error) {
 	dc.DrawImage(img, 0, 0)
 	dc.SetRGB(1, 1, 1)
 
-	if err := dc.LoadFontFace("./ariblk.ttf", 122); err != nil {
+	if err := dc.LoadFontFace("./ariblk.ttf", X/33); err != nil {
 		panic(err)
 	}
 
