@@ -5,7 +5,6 @@ import (
 	_ "embed"
 	"fmt"
 	"image"
-	"io"
 	"net/http"
 	"net/url"
 	"os"
@@ -51,17 +50,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	cachePath := "./.cache/" + b64(title) + ".png"
-
-	if _, err := os.Stat(cachePath); !os.IsNotExist(err) {
-		file, err := os.Open(cachePath)
-
-		if err == nil {
-			io.Copy(w, file)
-			return
-		}
-	}
-
 	templateName := "hd"
 
 	if paramExists(params, "quality") {
@@ -83,7 +71,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	dc.EncodePNG(w)
-	dc.SavePNG(cachePath)
 }
 
 func toImage(binData []byte) image.Image {
