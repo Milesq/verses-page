@@ -7,6 +7,7 @@ import Ripples from 'react-ripples'
 import { useRouter } from 'next/router'
 import ThemeSwitch from '../ThemeSwitch'
 import Hamburger from '../Hamburger'
+import Tr from '../Tr'
 import reactSelectThemedStyle from '../../styles/react-select-themed'
 import { useChanged } from '../../hooks'
 import { minimize } from '../../utils'
@@ -57,10 +58,6 @@ const NavBar: FC = () => {
       overlayElement.current.classList.toggle('opacity-70')
     }, 5)
   }, [menuOpened])
-
-  const Tr = () => (
-    <div className="md:hidden bg-gray-300 dark:border-gray-900 border w-full" />
-  )
 
   return (
     <>
