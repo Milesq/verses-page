@@ -79,7 +79,7 @@ function ImageControlPanel<T extends Record<string, Option>>({
     <>
       <div className="bg-gray-300 dark:border-gray-900 border w-full my-10" />
 
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex items-center justify-between mb-8 flex-col-reverse gap-3 sm:gap-0 sm:flex-row">
         {Object.entries(controls).map(([name, { label, values }]) => (
           <Radio
             label={label}
@@ -142,7 +142,7 @@ function ImageControlPanel<T extends Record<string, Option>>({
         src={getImageRef(data.current)}
         alt="Board with the verse"
         className="
-          w-3/4
+          md:w-3/4
           mx-auto
           rounded
           shadow
