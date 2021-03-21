@@ -1,10 +1,11 @@
 import { PropsWithChildren } from 'react'
 import Swal from 'sweetalert2'
+import { LabeledValue } from '../utils'
 import Button from './Button'
 
 export interface Option {
   label: string
-  values: { label: string; value: string }[]
+  values: LabeledValue[]
 }
 
 export type GetImageRef<T> = (data: Record<keyof T, string>) => string
