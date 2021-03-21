@@ -5,7 +5,7 @@ export type ButtonProps = PropsWithChildren<
   Partial<{
     disabled: boolean
     containerClassName: string
-    customColors: boolean
+    'custom-colors': boolean
   }>
 > &
   HTMLAttributes<HTMLButtonElement>
@@ -14,7 +14,7 @@ function Button({
   children,
   disabled,
   containerClassName = '',
-  customColors,
+  'custom-colors': customColors,
   ...props
 }: ButtonProps) {
   return (
