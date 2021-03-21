@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import ThemeSwitch from '../ThemeSwitch'
 import Hamburger from '../Hamburger'
 import reactSelectThemedStyle from '../../styles/react-select-themed'
-import { useSchanged } from '../../hooks'
+import { useChanged } from '../../hooks'
 import { minimize } from '../../utils'
 
 const NavBar: FC = () => {
@@ -52,7 +52,7 @@ const NavBar: FC = () => {
     closeHamburger()
   }, [route])
 
-  useSchanged(() => {
+  useChanged(() => {
     setTimeout(() => {
       overlayElement.current.classList.toggle('opacity-70')
     }, 5)

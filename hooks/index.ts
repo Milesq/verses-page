@@ -1,2 +1,2 @@
 export { default as useScroll } from './useScroll'
-export { default as useSchanged } from './useChanged'
+export { default as useChanged } from './useChanged'
