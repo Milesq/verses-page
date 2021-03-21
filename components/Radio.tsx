@@ -18,7 +18,7 @@ function Radio({ label, values, onChange, defaultValue }: Partial<RadioProps>) {
 
   return (
     <div>
-      <span>{label}:&nbsp;</span>
+      <span className="dark:text-white">{label}:&nbsp;</span>
 
       {values.map(({ label: sign, value }) => (
         <button
@@ -32,10 +32,10 @@ function Radio({ label, values, onChange, defaultValue }: Partial<RadioProps>) {
             font-semibold
             text-sm
             hover:text-white
+            dark:text-white
             py-1 px-2
             mx-1
             border
-            border-blue
             hover:border-transparent
             rounded
           `}
