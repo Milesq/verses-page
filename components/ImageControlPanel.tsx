@@ -1,5 +1,5 @@
-import Image from 'next/image'
 import { PropsWithChildren } from 'react'
+import Button from './Button'
 
 export interface Option {
   label: string
@@ -23,6 +23,15 @@ function ImageControlPanel<T extends Record<string, Option>>({
 
   return (
     <>
+      <Button
+        custom-colors
+        className="
+          bg-blue-600
+          hover:bg-blue-500
+          dark:hover:bg-blue-700"
+      >
+        Pobierz
+      </Button>
       <img
         src={getImageRef(data)}
         alt="Board with the verse"

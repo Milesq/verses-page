@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import { PropsWithChildren, HTMLAttributes } from 'react'
 import Ripples from 'react-ripples'
 
@@ -29,6 +30,9 @@ function Button({
           className={`
             disabled:bg-gray-400
             disabled:pointer-events-none
+
+
+            ${props.className || ''}
 
             ${
               !customColors &&
