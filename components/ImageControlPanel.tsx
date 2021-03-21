@@ -1,4 +1,5 @@
 import { PropsWithChildren } from 'react'
+import Swal from 'sweetalert2'
 import Button from './Button'
 
 export interface Option {
@@ -19,12 +20,50 @@ function ImageControlPanel<T extends Record<string, Option>>({
 }: PropsWithChildren<ControlPanelProps<T>>) {
   const data = Object.fromEntries(
     Object.entries(controls).map(([name]) => [name, 'sd'])
-  )
+  ) as Record<keyof typeof controls, string>
+
+  async function getImage(): Promise<{ blob: Blob; fileName: string }> {
+    const resp = await fetch(getImageRef(data))
+    const blob = await resp.blob()
+    const fileName = decodeURIComponent(resp.headers.get('X-Filename'))
+
+    if (resp.headers.get('content-type').startsWith('application/json')) {
+      throw new Error('server offline')
+    }
+
+    return {
+      fileName,
+      blob,
+    }
+  }
+
+  async function share() {
+    getImage()
+  }
+
+  async function download() {
+    try {
+      const { blob, fileName } = await getImage()
+
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.style.display = 'none'
+      a.href = url
+      a.download = fileName
+      document.body.appendChild(a)
+
+      a.click()
+      URL.revokeObjectURL(url)
+    } catch {
+      Swal.fire('Oops...', 'Brak połączenia z serwerem', 'error')
+    }
+  }
 
   return (
     <>
       <div className="w-full flex gap-2">
         <Button
+          onClick={download}
           custom-colors
           className="
           bg-blue-600
@@ -47,6 +86,7 @@ function ImageControlPanel<T extends Record<string, Option>>({
           </svg>
         </Button>
         <Button
+          onClick={share}
           custom-colors
           className="
           bg-blue-600
