@@ -62,6 +62,7 @@ const Home: FC = () => {
     }
 
     setVerseEditorVisibility(false)
+    setControlPanelVisibility(false)
     lockForm(true)
 
     const params = new URLSearchParams()
@@ -188,6 +189,7 @@ const Home: FC = () => {
             containerClassName="float-right"
             onClick={() => {
               verseText.current = newVerseText.current.value
+              setVerseEditorVisibility(false)
               setControlPanelVisibility(true)
             }}
           >

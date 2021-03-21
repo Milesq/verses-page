@@ -34,6 +34,7 @@ export default async (
     const image = await createBoard(sign, `“${verse}”`, quality)
 
     res.setHeader('X-Filename', encodeURIComponent(`${sign}.png`))
+    res.setHeader('content-type', 'image/png')
     return res.send(image)
   } catch (err) {
     console.log(err)
