@@ -42,7 +42,7 @@ function ImageControlPanel<T extends Record<string, Option>>({
 
     const file = new File([blob], fileName, { type: blob.type })
 
-    await navigator.share({
+    await (navigator.share as any)({
       url: window.location.origin + getImageRef,
       title: 'Wygeneruj planszę z biblijnym wersetem',
       text: 'Odwiedź bible-verse.vercel.app',
