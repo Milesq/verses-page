@@ -24,6 +24,10 @@ class MyDocument extends Document {
             name="description"
             content="Generuj plansze z biblijnymi wersetami!"
           />
+          <meta
+            name="og:image"
+            content="https://bible-verse.vercel.app/verse.png"
+          />
           <script
             async
             src={`https://www.googletagmanager.com/gtag/js?id=${trakcingID}`}
