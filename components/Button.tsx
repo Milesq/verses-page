@@ -3,7 +3,6 @@ import Ripples from 'react-ripples'
 
 export type ButtonProps = PropsWithChildren<
   Partial<{
-    disabled: boolean
     containerClassName: string
     'custom-colors': boolean
   }>
@@ -12,7 +11,6 @@ export type ButtonProps = PropsWithChildren<
 
 function Button({
   children,
-  disabled,
   containerClassName = '',
   'custom-colors': customColors,
   ...props
@@ -28,7 +26,6 @@ function Button({
       <Ripples>
         <button
           {...props}
-          disabled={disabled}
           className={`
             disabled:bg-gray-400
             disabled:pointer-events-none
