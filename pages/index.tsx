@@ -91,6 +91,7 @@ const Home: FC = () => {
   const controlPanelOptions = {
     quality: {
       label: 'Jakość',
+      defaultValue: 'hd',
       values: [
         { label: '480p', value: 'sd' },
         { label: '720p', value: 'hd' },

@@ -1,10 +1,12 @@
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, useRef } from 'react'
 import Swal from 'sweetalert2'
 import { LabeledValue } from '../utils'
 import Button from './Button'
+import Radio from './Radio'
 
 export interface Option {
   label: string
+  defaultValue: string
   values: LabeledValue[]
 }
 
@@ -19,12 +21,16 @@ function ImageControlPanel<T extends Record<string, Option>>({
   controls,
   getImageRef,
 }: PropsWithChildren<ControlPanelProps<T>>) {
-  const data = Object.fromEntries(
-    Object.entries(controls).map(([name]) => [name, 'sd'])
+  const defaultData = Object.fromEntries(
+    Object.entries(controls).map(([name, { defaultValue }]) => [
+      name,
+      defaultValue,
+    ])
   ) as Record<keyof typeof controls, string>
+  const data = useRef(defaultData)
 
   async function getImage(): Promise<{ blob: Blob; fileName: string }> {
-    const resp = await fetch(getImageRef(data))
+    const resp = await fetch(getImageRef(data.current))
     const blob = await resp.blob()
     const fileName = decodeURIComponent(resp.headers.get('X-Filename'))
 
@@ -119,8 +125,18 @@ function ImageControlPanel<T extends Record<string, Option>>({
         )}
       </div>
 
+      {Object.entries(controls).map(([name, { label, values }]) => (
+        <Radio
+          label={label}
+          values={values}
+          defaultValue="hd"
+          // eslint-disable-next-line no-return-assign
+          onChange={newVal => ((data.current as any)[name] = newVal)}
+        />
+      ))}
+
       <img
-        src={getImageRef(data)}
+        src={getImageRef(data.current)}
         alt="Board with the verse"
         className="
           w-3/4
