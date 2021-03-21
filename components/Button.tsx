@@ -1,13 +1,22 @@
 import { PropsWithChildren, HTMLAttributes } from 'react'
 import Ripples from 'react-ripples'
 
+export type ButtonProps = PropsWithChildren<
+  Partial<{
+    disabled: boolean
+    containerClassName: string
+    customColors: boolean
+  }>
+> &
+  HTMLAttributes<HTMLButtonElement>
+
 function Button({
   children,
   disabled,
   containerClassName = '',
+  customColors,
   ...props
-}: PropsWithChildren<{ disabled?: boolean, containerClassName?: string }> &
-  HTMLAttributes<HTMLButtonElement>) {
+}: ButtonProps) {
   return (
     <div
       className={`
@@ -20,22 +29,28 @@ function Button({
         <button
           {...props}
           disabled={disabled}
-          className="
+          className={`
             disabled:bg-gray-400
             disabled:pointer-events-none
 
+            ${
+              !customColors &&
+              `
+              bg-green-600
+              hover:bg-green-500
+              dark:hover:bg-green-700
+            `
+            }
+
             transition
             duration-150
-            bg-green-600
-            hover:bg-green-500
-            dark:hover:bg-green-700
             shadow
             hover:shadow-md
             text-white
             px-3 py-2
             rounded-full
             focus:outline-none
-          "
+          `}
           type="submit"
         >
           {children}
