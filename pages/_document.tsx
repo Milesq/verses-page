@@ -39,7 +39,6 @@ class MyDocument extends Document {
                 `,
             }}
           />
-
         </Head>
         <body className="dark:bg-gray-700" data-dark>
           <Main />

@@ -196,6 +196,8 @@ const Home: FC = () => {
         </>
       )}
 
+      <div className="clear-both mt-8" />
+
       {isControlPanelVisible && (
         <ImageControlPanel
           controls={controlPanelOptions}
@@ -208,8 +210,6 @@ const Home: FC = () => {
           }
         />
       )}
-
-      <div className="clear-both" />
     </>
   )
 }
