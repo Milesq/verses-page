@@ -171,7 +171,7 @@ const Home: FC = () => {
           </div>
         </div>
 
-        <Button>Generuj</Button>
+        <Button containerClassName="float-right">Generuj</Button>
       </form>
 
       {isVerseEditorVisible && (
@@ -185,7 +185,7 @@ const Home: FC = () => {
           />
 
           <Button
-            // eslint-disable-next-line no-return-assign
+            containerClassName="float-right"
             onClick={() => {
               verseText.current = newVerseText.current.value
               setControlPanelVisibility(true)

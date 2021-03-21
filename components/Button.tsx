@@ -4,16 +4,17 @@ import Ripples from 'react-ripples'
 function Button({
   children,
   disabled,
+  containerClassName = '',
   ...props
-}: PropsWithChildren<{ disabled?: boolean }> &
+}: PropsWithChildren<{ disabled?: boolean, containerClassName?: string }> &
   HTMLAttributes<HTMLButtonElement>) {
   return (
     <div
-      className="
-        float-right
+      className={`
+        ${containerClassName}
         rounded-full
         overflow-hidden
-      "
+      `}
     >
       <Ripples>
         <button
