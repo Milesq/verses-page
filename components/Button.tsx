@@ -1,6 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 import { PropsWithChildren, HTMLAttributes } from 'react'
 import Ripples from 'react-ripples'
+import { minimize } from '../utils'
 
 export type ButtonProps = PropsWithChildren<
   Partial<{
@@ -18,7 +19,7 @@ function Button({
 }: ButtonProps) {
   return (
     <div
-      className={`
+      className={minimize`
         ${containerClassName}
         rounded-full
         overflow-hidden
@@ -27,7 +28,7 @@ function Button({
       <Ripples>
         <button
           {...props}
-          className={`
+          className={minimize`
             disabled:bg-gray-400
             disabled:pointer-events-none
 
