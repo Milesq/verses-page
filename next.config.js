@@ -5,4 +5,7 @@ module.exports = {
     locales: Object.keys(allBooks),
     defaultLocale: 'pl',
   },
+  future: {
+    webpack5: true,
+  },
 }
