@@ -38,8 +38,10 @@ const Home: FC = () => {
       chapter: { chapter, begVerse, endVerse },
     } = getValues()
 
+    const cutChar = endVerse - begVerse === 1 ? ',' : '-'
+
     return `${book.label} ${chapter}:${begVerse}${
-      endVerse ? `-${endVerse}` : ''
+      endVerse ? `${cutChar}${endVerse}` : ''
     }`
   }
 
