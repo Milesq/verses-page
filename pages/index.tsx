@@ -16,7 +16,7 @@ import '../node_modules/pretty-checkbox/dist/pretty-checkbox.min.css'
 type ChapterData = Record<'chapter' | 'begVerse' | 'endVerse', string>
 
 const Home: FC = () => {
-  const areChaptersAndVerseValid = /^(?<chapter>\d+):(?<begVerse>\d+)(-(?<endVerse>\d+))?$/
+  const areChaptersAndVerseValid = /^(?<chapter>\d+):(?<begVerse>\d+)([-,](?<endVerse>\d+))?$/
   const { locale } = useRouter()
   const currentLang: BookData[] = allBooks[locale].data
 
