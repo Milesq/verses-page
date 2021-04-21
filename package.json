@@ -32,7 +32,7 @@
     "react-select": "^4.3.0",
     "sass": "^1.32.8",
     "sweetalert2": "^10.16.5",
-    "tailwindcss": "^2.0.4"
+    "tailwindcss": "^2.1.1"
   },
   "devDependencies": {
     "@types/cookie": "^0.4.0",
