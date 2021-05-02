@@ -80,16 +80,18 @@ function ImageControlPanel<T extends Record<string, Option>>({
       <div className="bg-gray-300 dark:border-gray-900 border w-full my-10" />
 
       <div className="flex items-center justify-between mb-8 flex-col-reverse gap-3 sm:gap-0 sm:flex-row">
-        {Object.entries(controls).map(([name, { label, values }]) => (
-          <Radio
-            key={name}
-            label={label}
-            values={values}
-            defaultValue="hd"
-            // eslint-disable-next-line no-return-assign
-            onChange={newVal => ((data.current as any)[name] = newVal)}
-          />
-        ))}
+        {Object.entries(controls).map(
+          ([name, { label, values, defaultValue }]) => (
+            <Radio
+              key={name}
+              label={label}
+              values={values}
+              defaultValue={defaultValue}
+              // eslint-disable-next-line no-return-assign
+              onChange={newVal => ((data.current as any)[name] = newVal)}
+            />
+          )
+        )}
 
         <div className="flex gap-2">
           <Button
