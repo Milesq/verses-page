@@ -25,7 +25,13 @@ const Home: FC = () => {
     value: path,
   }))
 
-  const { register, handleSubmit, errors, control, getValues } = useForm()
+  const {
+    register,
+    handleSubmit,
+    control,
+    getValues,
+    formState: { errors },
+  } = useForm()
   const [isFormInProgress, lockForm] = useState(false)
   const verseText = useRef('')
   const [isVerseEditorVisible, setVerseEditorVisibility] = useState(null)
@@ -124,11 +130,9 @@ const Home: FC = () => {
           rules={{
             validate: book => book !== '',
           }}
-          render={({ onChange, onBlur, value }) => (
+          render={({ field }) => (
             <Select
-              onChange={onChange}
-              onBlur={onBlur}
-              value={value}
+              {...field}
               styles={reactSelectThemedStyle}
               aria-label=""
               placeholder="Wyszukaj księgę"
@@ -144,8 +148,7 @@ const Home: FC = () => {
           className={`${errors.chapter && 'error'} pretty-input`}
           autoComplete="off"
           type="text"
-          name="chapter"
-          ref={register({
+          {...register('chapter', {
             required: true,
             pattern: areChaptersAndVerseValid,
             setValueAs(chapterData: string): ChapterData | string {
@@ -160,8 +163,7 @@ const Home: FC = () => {
 
         <div className="pretty p-default p-curve p-fill p-smooth">
           <input
-            ref={register()}
-            name="is-verse-editable"
+            {...register('is-verse-editable')}
             type="checkbox"
             className=" text-orange-600"
           />

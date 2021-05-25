@@ -82,6 +82,7 @@ function ImageControlPanel<T extends Record<string, Option>>({
       <div className="flex items-center justify-between mb-8 flex-col-reverse gap-3 sm:gap-0 sm:flex-row">
         {Object.entries(controls).map(([name, { label, values }]) => (
           <Radio
+            key={name}
             label={label}
             values={values}
             defaultValue="hd"

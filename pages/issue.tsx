@@ -18,7 +18,12 @@ type CautionResponse = Partial<{
 }>
 
 const Issue: FC = () => {
-  const { register, handleSubmit, errors, reset } = useForm<Inputs>()
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<Inputs>()
   const [isFormInProgress, lockForm] = useState(false)
 
   const sendCaution: (data: Inputs) => Promise<void> = async data => {
@@ -71,8 +76,7 @@ const Issue: FC = () => {
 
       <form onSubmit={handleSubmit(sendCaution)}>
         <input
-          name="contact"
-          ref={register({ minLength: 5 })}
+          {...register('contact', { minLength: 5 })}
           placeholder="Dane konktaktowe (opcjonalnie)"
           className="pretty-input"
           type="text"
@@ -83,9 +87,8 @@ const Issue: FC = () => {
         )}
 
         <textarea
-          name="content"
+          {...register('content', { required: true, minLength: 3 })}
           autoComplete="off"
-          ref={register({ required: true, minLength: 3 })}
           className="pretty-input"
           rows={10}
           placeholder="Informacje"

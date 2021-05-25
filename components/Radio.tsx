@@ -22,6 +22,7 @@ function Radio({ label, values, onChange, defaultValue }: Partial<RadioProps>) {
 
       {values.map(({ label: sign, value }) => (
         <button
+          key={value}
           onClick={() => designateChoosenOne(value)}
           type="button"
           className={`
