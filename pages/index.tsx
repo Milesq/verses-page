@@ -152,10 +152,12 @@ const Home: FC = () => {
             required: true,
             pattern: areChaptersAndVerseValid,
             setValueAs(chapterData: string): ChapterData | string {
-              if (!areChaptersAndVerseValid.test(chapterData))
+              const blank = /\s/g
+              const chapterWithoutBlanks = chapterData.replace(blank, '')
+              if (!areChaptersAndVerseValid.test(chapterWithoutBlanks))
                 return chapterData
 
-              return areChaptersAndVerseValid.exec(chapterData)
+              return areChaptersAndVerseValid.exec(chapterWithoutBlanks)
                 .groups as ChapterData
             },
           })}
