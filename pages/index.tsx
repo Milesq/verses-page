@@ -15,6 +15,15 @@ import '../node_modules/pretty-checkbox/dist/pretty-checkbox.min.css'
 
 type ChapterData = Record<'chapter' | 'begVerse' | 'endVerse', string>
 
+interface BookFormData {
+  book: {
+    value: string
+    label: string
+  }
+  chapter: ChapterData
+  'is-verse-editable': boolean
+}
+
 const Home: FC = () => {
   const areChaptersAndVerseValid =
     /^(?<chapter>\d+):(?<begVerse>\d+)([-,](?<endVerse>\d+))?$/
@@ -51,15 +60,6 @@ const Home: FC = () => {
     return `${book.label} ${chapter}:${begVerse}${
       endVerse ? `${cutChar}${endVerse}` : ''
     }`
-  }
-
-  interface BookFormData {
-    book: {
-      value: string
-      label: string
-    }
-    chapter: ChapterData
-    'is-verse-editable': boolean
   }
 
   async function submit({
