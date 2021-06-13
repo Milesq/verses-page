@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import { FC, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import Select from 'react-select'
 import { useForm, Controller } from 'react-hook-form'
 import { LinearProgress } from '@rmwc/linear-progress'
@@ -38,6 +38,7 @@ const Home: FC = () => {
   const [isVerseEditorVisible, setVerseEditorVisibility] = useState(null)
   const [isControlPanelVisible, setControlPanelVisibility] = useState(false)
   const newVerseText = useRef(undefined)
+  const { pathname, query, ...router } = useRouter()
 
   function getBookName(): string {
     const {
@@ -69,6 +70,17 @@ const Home: FC = () => {
     if (isFormInProgress) {
       return
     }
+
+    router.push({
+      pathname,
+      query: {
+        ...query,
+        book: book.value,
+        chapter,
+        begVerse,
+        endVerse,
+      },
+    })
 
     setVerseEditorVisibility(false)
     setControlPanelVisibility(false)
