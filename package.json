@@ -12,7 +12,7 @@
   "dependencies": {
     "@prisma/client": "^2.20.1",
     "@rmwc/linear-progress": "^6.1.4",
-    "@typeofweb/schema": "^0.7.3",
+    "@typeofweb/schema": "^0.6.1",
     "@types/react-select": "^4.0.15",
     "axios": "^0.21.1",
     "cookie": "^0.4.1",
