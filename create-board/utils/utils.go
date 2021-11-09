@@ -1,9 +1,9 @@
 package utils
 
 import (
-	"bytes"
 	"image"
 	"net/url"
+	"os"
 
 	"github.com/fogleman/gg"
 )
@@ -59,12 +59,15 @@ func ParamExists(params url.Values, value string) bool {
 	return true
 }
 
-func BinaryToImage(binData []byte) image.Image {
-	img, _, err := image.Decode(bytes.NewReader(binData))
+func LoadImage(path string) (image.Image, error) {
+	f, err := os.Open(path)
 
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
-	return img
+	defer f.Close()
+
+	image, _, err := image.Decode(f)
+	return image, err
 }
