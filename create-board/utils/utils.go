@@ -4,6 +4,7 @@ import (
 	"image"
 	"net/url"
 	"os"
+	"strings"
 
 	"github.com/fogleman/gg"
 )
@@ -70,4 +71,8 @@ func LoadImage(path string) (image.Image, error) {
 
 	image, _, err := image.Decode(f)
 	return image, err
+}
+
+func PureName(name string) string {
+	return name[:strings.LastIndex(name, ".")]
 }
