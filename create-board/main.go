@@ -3,7 +3,6 @@ package main
 import (
 	_ "embed"
 	"fmt"
-	"image"
 	"os"
 	"strings"
 
@@ -11,10 +10,7 @@ import (
 	"github.com/milesq/verses-page/create-board/routes"
 )
 
-var templates map[string]image.Image
-
 func main() {
-	templates = loadTemplates()
 	port := "80"
 	app := fiber.New()
 

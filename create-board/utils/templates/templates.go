@@ -1,4 +1,4 @@
-package main
+package templates
 
 import (
 	"fmt"
@@ -11,7 +11,7 @@ import (
 	"github.com/thoas/go-funk"
 )
 
-func searchTemplates(dir string) []string {
+func SearchTemplates(dir string) []string {
 	return funk.FlattenDeep(insideSearchTemplates(dir)).([]string)
 }
 
@@ -28,16 +28,16 @@ func insideSearchTemplates(dir string) interface{} {
 		if file.IsDir() {
 			fullDirPath := fmt.Sprintf("%s/%s", dir, name)
 
-			return searchTemplates(fullDirPath)
+			return SearchTemplates(fullDirPath)
 		}
 
 		return []string{dir + "/" + name}
 	}).([][]string)
 }
 
-func loadTemplates() map[string]image.Image {
+func LoadTemplates() map[string]image.Image {
 	result := map[string]image.Image{}
-	templates := searchTemplates("./templates")
+	templates := SearchTemplates("./templates")
 
 	for _, template := range templates {
 		name := utils.PureName(path.Base(template))
