@@ -76,3 +76,9 @@ func LoadImage(path string) (image.Image, error) {
 func PureName(name string) string {
 	return name[:strings.LastIndex(name, ".")]
 }
+
+func DirName(path string) string {
+	path = path[:strings.LastIndex(path, "/")]
+
+	return path[strings.LastIndex(path, "/")+1:]
+}

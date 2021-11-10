@@ -1,12 +1,8 @@
 package routes
 
-import (
-	"image"
+import tmpl "github.com/milesq/verses-page/create-board/utils/templates"
 
-	tmpl "github.com/milesq/verses-page/create-board/utils/templates"
-)
-
-var templates map[string]image.Image
+var templates tmpl.Templates
 
 func init() {
 	templates = tmpl.LoadTemplates()
