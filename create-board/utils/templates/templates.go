@@ -2,7 +2,6 @@ package templates
 
 import (
 	"fmt"
-	"image"
 	"io/fs"
 	"io/ioutil"
 	"path"
@@ -35,19 +34,27 @@ func insideSearchTemplates(dir string) interface{} {
 	}).([][]string)
 }
 
-func LoadTemplates() map[string]image.Image {
-	result := map[string]image.Image{}
+func LoadTemplates() Templates {
+	result := make(Templates)
 	templates := SearchTemplates("./templates")
 
 	for _, template := range templates {
 		name := utils.PureName(path.Base(template))
+		typ := utils.DirName(template)
+
 		image, err := utils.LoadImage(template)
 
 		if err != nil {
 			panic(err)
 		}
 
-		result[name] = image
+		_, alreadyExists := result[typ]
+
+		if !alreadyExists {
+			result[typ] = make(Template)
+		}
+
+		result[typ][name] = image
 	}
 
 	return result
