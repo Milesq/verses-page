@@ -2,7 +2,6 @@ package utils
 
 import (
 	"image"
-	"net/url"
 	"os"
 	"strings"
 
@@ -49,15 +48,6 @@ func DrawText(img image.Image, verse, content string) (*gg.Context, error) {
 	dc.DrawString(verse, xBeg, yBeg)
 
 	return dc, nil
-}
-
-func ParamExists(params url.Values, value string) bool {
-	v, ok := params[value]
-	if !ok || len(v) != 1 {
-		return false
-	}
-
-	return true
 }
 
 func LoadImage(path string) (image.Image, error) {
