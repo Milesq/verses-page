@@ -22,7 +22,7 @@ func main() {
 
 	fmt.Println("Listening at ", addr)
 
-	app.Get("/", routes.DrawImage)
+	app.Get("/board/:type", routes.DrawImage)
 	app.Get("/templates", routes.ListTemplates)
 	app.Get("/template/:name", routes.ShowTemplate)
 
