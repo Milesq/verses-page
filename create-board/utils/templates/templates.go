@@ -10,6 +10,8 @@ import (
 	"github.com/thoas/go-funk"
 )
 
+const TEMPLATE_DIR = "./templates"
+
 func SearchTemplates(dir string) []string {
 	return funk.FlattenDeep(insideSearchTemplates(dir)).([]string)
 }
@@ -36,7 +38,7 @@ func insideSearchTemplates(dir string) interface{} {
 
 func LoadTemplates() Templates {
 	result := make(Templates)
-	templates := SearchTemplates("./templates")
+	templates := SearchTemplates(TEMPLATE_DIR)
 
 	for _, template := range templates {
 		name := utils.PureName(path.Base(template))
