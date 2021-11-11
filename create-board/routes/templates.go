@@ -1,6 +1,9 @@
 package routes
 
 import (
+	"bytes"
+	"fmt"
+	"image/png"
 	"reflect"
 
 	"github.com/gofiber/fiber/v2"
@@ -23,5 +26,21 @@ func ListTemplates(c *fiber.Ctx) error {
 }
 
 func ShowTemplate(c *fiber.Ctx) error {
-	return c.JSON(templates)
+	name := c.Params("name")
+	template, ok := templates[name]
+
+	if !ok {
+		return c.Status(404).SendString("Template not found")
+	}
+
+	img := template["sd"]
+	buff := new(bytes.Buffer)
+
+	err := png.Encode(buff, img)
+	if err != nil {
+		fmt.Println("failed to create buffer", err)
+		return c.JSON(map[string]string{"error": "cannot convert image to PNG. Contact with administrator"})
+	}
+
+	return c.Send(buff.Bytes())
 }
