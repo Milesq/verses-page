@@ -57,8 +57,7 @@ export const errors: Record<Errors, Omit<ErrorsData, 'code'>> = {
   unknownBook: {
     message: {
       en: 'unknown book',
-      pl:
-        'Nieznana księga, skontaktuj się z administratorem (poprzez zakładkę "zgłoś problem")',
+      pl: 'Nieznana księga, skontaktuj się z administratorem (poprzez zakładkę "zgłoś problem")',
     },
   },
   unknownVerseOrChapter: {

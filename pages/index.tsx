@@ -1,17 +1,19 @@
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import { FC, useEffect, useRef, useState } from 'react'
+import { FC, useRef, useState } from 'react'
 import Select from 'react-select'
 import { useForm, Controller } from 'react-hook-form'
 import { LinearProgress } from '@rmwc/linear-progress'
 import Swal from 'sweetalert2'
+
+import allBooks from 'scripts/books.json'
+import { BookData } from 'scripts/Books'
+
 import reactSelectThemedStyle from '../styles/react-select-themed'
-import allBooks from '../scripts/books.json'
-import { BookData } from '../scripts/Books'
 import Button from '../components/Button'
 import ImageControlPanel from '../components/ImageControlPanel'
 import { stringifyError } from '../errors'
-import '../node_modules/pretty-checkbox/dist/pretty-checkbox.min.css'
+import 'pretty-checkbox/dist/pretty-checkbox.min.css'
 
 type ChapterData = Record<'chapter' | 'begVerse' | 'endVerse', string>
 

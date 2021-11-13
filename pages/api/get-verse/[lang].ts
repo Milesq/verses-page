@@ -8,8 +8,9 @@ import {
   tuple,
   ValidationError,
 } from '@typeofweb/schema'
-import books from '../../../scripts/books.json'
-import { Books } from '../../../scripts/Books'
+
+import books from 'scripts/books.json'
+import { Books } from 'scripts/Books'
 import makeError, { ErrorData } from '../../../errors'
 
 const parser = new DomParser()
