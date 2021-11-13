@@ -10,7 +10,7 @@ import (
 )
 
 func DrawImage(c *fiber.Ctx) error {
-	sign := c.Query("sign")
+	sign := c.Query("title")
 	verse := c.Query("verse")
 	quality := c.Query("quality", "hd")
 	typ := c.Params("type")

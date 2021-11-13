@@ -230,7 +230,7 @@ const Home: FC = () => {
               getBookName()
             )}&verse=${encodeURIComponent(
               verseText.current
-            )}&quality=${quality}`
+            )}&quality=${quality}&type=default`
           }
         />
       )}
