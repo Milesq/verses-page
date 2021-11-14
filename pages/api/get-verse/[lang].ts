@@ -11,7 +11,7 @@ import {
 
 import books from 'scripts/books.json'
 import { Books } from 'scripts/Books'
-import makeError, { ErrorData } from '../../../errors'
+import makeError, { makeErrorSender } from '../../../errors'
 
 const parser = new DomParser()
 
@@ -74,8 +74,7 @@ export default async (
   req: VercelRequest,
   res: VercelResponse
 ): Promise<any> => {
-  const err = (error: ErrorData, code: number = 400) =>
-    res.status(code).json(error)
+  const err = makeErrorSender(res)
 
   try {
     const { lang, book, chapter, verses } = verseQueryValidator(req.query)
