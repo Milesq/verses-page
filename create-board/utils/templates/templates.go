@@ -41,6 +41,12 @@ func LoadTemplates() Templates {
 	templates := SearchTemplates(TEMPLATE_DIR)
 
 	for _, template := range templates {
+		ext := path.Ext(template)
+		imgExts := []string{".png", ".jpg", ".jpeg"}
+		if !funk.Contains(imgExts, ext) {
+			continue
+		}
+
 		name := utils.PureName(path.Base(template))
 		typ := utils.DirName(template)
 
