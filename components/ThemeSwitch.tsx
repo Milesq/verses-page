@@ -27,7 +27,9 @@ const ThemeSwitch: FC<Partial<ThemeSwitchProps>> = ({
   return (
     <span
       onClick={handler}
-      className={`${styles.btn} ${active && styles['btn--active']}`}
+      className={`cursor-pointer ${styles.btn} ${
+        active && styles['btn--active']
+      }`}
     />
   )
 }
