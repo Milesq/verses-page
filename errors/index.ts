@@ -1,3 +1,5 @@
+import type { VercelResponse } from '@vercel/node'
+
 export type Errors =
   | 'unkown'
   | 'quoteExceeded'
@@ -86,6 +88,11 @@ export const stringifyError = (
     ? messageGetter(...args)
     : messageGetter
 }
+
+export const makeErrorSender =
+  (res: VercelResponse) =>
+  (error: ErrorData, code: number = 400) =>
+    res.status(code).json(error)
 
 const makeError = (
   name: Keys,

@@ -35,8 +35,9 @@ export default async (
     const { sign, verse, quality, type } = verseQueryValidator(req.query)
     const image = await createBoard(type, sign, `“${verse}”`, quality)
 
-    res.setHeader('X-Filename', encodeURIComponent(`${sign}.png`))
-    res.setHeader('content-type', 'image/png')
+    res
+      .setHeader('X-Filename', encodeURIComponent(`${sign}.png`))
+      .setHeader('content-type', 'image/png')
     return res.send(image)
   } catch (err) {
     console.log(err)
