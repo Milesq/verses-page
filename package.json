@@ -30,7 +30,7 @@
     "react-hook-form": "^7.19.5",
     "react-ripples": "^2.2.1",
     "react-select": "^5.2.1",
-    "sass": "^1.32.8",
+    "sass": "^1.43.4",
     "scripts": "file:scripts",
     "sweetalert2": "^11.1.10",
     "tailwindcss": "^2.2.19"
