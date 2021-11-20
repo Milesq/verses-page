@@ -98,9 +98,9 @@ function ImageControlPanel<T extends Record<string, Option>>({
             onClick={download}
             custom-colors
             className="
-          bg-blue-600
-          hover:bg-blue-500
-          dark:hover:bg-blue-700"
+              bg-blue-600
+              hover:bg-blue-500
+              dark:hover:bg-blue-700"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -122,9 +122,9 @@ function ImageControlPanel<T extends Record<string, Option>>({
               onClick={share}
               custom-colors
               className="
-              bg-blue-600
-              hover:bg-blue-500
-              dark:hover:bg-blue-700
+                bg-blue-600
+                hover:bg-blue-500
+                dark:hover:bg-blue-700
             "
             >
               <svg
