@@ -131,16 +131,26 @@ const Home: FC<StaticProps> = ({ templates }) => {
     lockForm(false)
   }
 
+  const bgImages = Object.keys(templates).map(name => ({
+    name,
+    src: templateNametoUrl(name),
+  }))
+
   const controlPanelOptions = {
-    quality: {
-      label: 'Jakość',
-      defaultValue: 'hd',
-      values: [
-        { label: '480p', value: 'sd' },
-        { label: '720p', value: 'hd' },
-        { label: '1080p', value: 'fullhd' },
-        { label: 'Najwyższa', value: 'raw' },
-      ],
+    images: {
+      bgImages,
+    },
+    text: {
+      quality: {
+        label: 'Jakość',
+        defaultValue: 'hd',
+        values: [
+          { label: '480p', value: 'sd' },
+          { label: '720p', value: 'hd' },
+          { label: '1080p', value: 'fullhd' },
+          { label: 'Najwyższa', value: 'raw' },
+        ],
+      },
     },
   }
 
