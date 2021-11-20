@@ -27,7 +27,7 @@ function useScroll(): ScrollData {
     return () => {
       window.removeEventListener('scroll', scrollHandler)
     }
-  })
+  }, [])
 
   return scrollData
 }
