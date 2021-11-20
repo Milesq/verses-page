@@ -23,7 +23,8 @@ export default async (
       .then(r => r.arrayBuffer())
       .then(Buffer.from)
 
-    return res.setHeader('content-type', 'image/png').send(buf)
+    res.setHeader('content-type', 'image/png')
+    return res.send(buf)
   } catch (error) {
     if (error instanceof ValidationError) {
       return err(makeError('unkown', 'en', JSON.stringify(error.details)))
