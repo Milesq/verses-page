@@ -14,19 +14,22 @@ export type GetImageRef<T> = (data: Record<keyof T, string>) => string
 
 export interface ControlPanelProps<T extends Record<string, Option>> {
   getImageRef: GetImageRef<T>
-  controls: T & Record<string, Option>
+  controls: {
+    text: T & Record<string, Option>
+    images: Record<string, number>
+  }
 }
 
 function ImageControlPanel<T extends Record<string, Option>>({
-  controls,
+  controls: { text: textOpts, images },
   getImageRef,
 }: PropsWithChildren<ControlPanelProps<T>>) {
   const defaultData = Object.fromEntries(
-    Object.entries(controls).map(([name, { defaultValue }]) => [
+    Object.entries(textOpts).map(([name, { defaultValue }]) => [
       name,
       defaultValue,
     ])
-  ) as Record<keyof typeof controls, string>
+  ) as Record<keyof typeof textOpts, string>
   const data = useRef(defaultData)
 
   async function getImage(): Promise<{ blob: Blob; fileName: string }> {
@@ -80,7 +83,7 @@ function ImageControlPanel<T extends Record<string, Option>>({
       <div className="bg-gray-300 dark:border-gray-900 border w-full my-10" />
 
       <div className="flex items-center justify-between mb-8 flex-col-reverse gap-3 sm:gap-0 sm:flex-row">
-        {Object.entries(controls).map(
+        {Object.entries(textOpts).map(
           ([name, { label, values, defaultValue }]) => (
             <Radio
               key={name}
