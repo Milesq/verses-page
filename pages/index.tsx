@@ -1,6 +1,8 @@
+import { GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { FC, useRef, useState } from 'react'
+import axios from 'axios'
 import Select from 'react-select'
 import { useForm, Controller } from 'react-hook-form'
 import { LinearProgress } from '@rmwc/linear-progress'
@@ -14,6 +16,8 @@ import Button from '../components/Button'
 import ImageControlPanel from '../components/ImageControlPanel'
 import { stringifyError } from '../errors'
 import 'pretty-checkbox/dist/pretty-checkbox.min.css'
+import { TemplateList } from '../common/api'
+import { templateNametoUrl } from '../utils'
 
 type ChapterData = Record<'chapter' | 'begVerse' | 'endVerse', string>
 
@@ -26,7 +30,23 @@ interface BookFormData {
   'is-verse-editable': boolean
 }
 
-const Home: FC = () => {
+type StaticProps = {
+  templates: TemplateList
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  const apiUrl = `${process.env.IMAGE_API}/templates`
+
+  const { data: templates } = await axios(apiUrl)
+
+  return {
+    props: {
+      templates,
+    },
+  }
+}
+
+const Home: FC<StaticProps> = ({ templates }) => {
   const areChaptersAndVerseValid =
     /^(?<chapter>\d+):(?<begVerse>\d+)([-,](?<endVerse>\d+))?$/
   const { locale } = useRouter()
