@@ -1,2 +1,5 @@
 [port]
 insert_final_newline = false
+
+[Dockerfile*]
+indent_size = 4
