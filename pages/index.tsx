@@ -255,12 +255,12 @@ const Home: FC<StaticProps> = ({ templates }) => {
       {isControlPanelVisible && (
         <ImageControlPanel
           controls={controlPanelOptions}
-          getImageRef={({ quality, bgImages: bgImage }) =>
+          getImageRef={({ quality, bgImages: bgImage }, preview = false) =>
             `/api/get-verse/board?sign=${encodeURIComponent(
               getBookName()
-            )}&verse=${encodeURIComponent(
-              verseText.current
-            )}&quality=${quality}&type=${bgImage}`
+            )}&verse=${encodeURIComponent(verseText.current)}&quality=${
+              preview ? 'sd' : quality
+            }&type=${bgImage}`
           }
         />
       )}
