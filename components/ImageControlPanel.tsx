@@ -1,7 +1,8 @@
 import { PropsWithChildren, useRef } from 'react'
 import Swal from 'sweetalert2'
-import { LabeledValue } from '../utils'
+import { LabeledValue, useRefresh } from '../utils'
 import Button from './Button'
+import ImagePicker, { ImagePickerProps } from './ImagePicker'
 import Radio from './Radio'
 
 export interface Option {
@@ -12,28 +13,50 @@ export interface Option {
 
 export type GetImageRef<T> = (data: Record<keyof T, string>) => string
 
-export interface ControlPanelProps<T extends Record<string, Option>> {
-  getImageRef: GetImageRef<T>
+export interface UniversalControls {
+  text: Record<string, Option>
+  images: Record<string, ImagePickerProps['images']>
+}
+
+export interface ControlPanelProps<
+  T extends UniversalControls['text'],
+  U extends UniversalControls['images']
+> {
+  getImageRef: GetImageRef<T & U>
   controls: {
-    text: T & Record<string, Option>
-    images: Record<string, number>
+    text: T & UniversalControls['text']
+    images: U & UniversalControls['images']
   }
 }
 
-function ImageControlPanel<T extends Record<string, Option>>({
+function ImageControlPanel<
+  T extends UniversalControls['text'],
+  U extends UniversalControls['images']
+>({
   controls: { text: textOpts, images },
   getImageRef,
-}: PropsWithChildren<ControlPanelProps<T>>) {
+}: PropsWithChildren<ControlPanelProps<T, U>>) {
+  const refresh = useRefresh()
   const defaultData = Object.fromEntries(
     Object.entries(textOpts).map(([name, { defaultValue }]) => [
       name,
       defaultValue,
     ])
   ) as Record<keyof typeof textOpts, string>
+  const defaultImages = Object.fromEntries(
+    Object.entries(images).map(([name, [{ name: defaultImage }]]) => [
+      name,
+      defaultImage,
+    ])
+  ) as Record<string, string>
+
   const data = useRef(defaultData)
+  const imagesData = useRef(defaultImages)
+
+  const imgRefArgs: any = { ...data.current, ...imagesData.current }
 
   async function getImage(): Promise<{ blob: Blob; fileName: string }> {
-    const resp = await fetch(getImageRef(data.current))
+    const resp = await fetch(getImageRef(imgRefArgs))
     const blob = await resp.blob()
     const fileName = decodeURIComponent(resp.headers.get('X-Filename'))
 
@@ -53,7 +76,7 @@ function ImageControlPanel<T extends Record<string, Option>>({
     const file = new File([blob], fileName, { type: blob.type })
 
     await (navigator.share as any)({
-      url: window.location.origin + getImageRef(data.current),
+      url: window.location.origin + getImageRef(imgRefArgs),
       title: 'Wygeneruj planszę z biblijnym wersetem',
       text: 'Odwiedź bible-verse.vercel.app',
       files: [file],
@@ -128,7 +151,7 @@ function ImageControlPanel<T extends Record<string, Option>>({
                 bg-blue-600
                 hover:bg-blue-500
                 dark:hover:bg-blue-700
-            "
+              "
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -144,8 +167,22 @@ function ImageControlPanel<T extends Record<string, Option>>({
           )}
         </div>
       </div>
+
+      {Object.entries(images).map(([name, image]) => (
+        <ImagePicker
+          key={name}
+          images={image}
+          onUpdate={i => {
+            const newImage = images[name][i]
+            refresh()
+
+            imagesData.current[name] = newImage.name
+          }}
+        />
+      ))}
+
       <img
-        src={getImageRef(data.current)}
+        src={getImageRef(imgRefArgs)}
         alt="Board with the verse"
         className="
           md:w-3/4
