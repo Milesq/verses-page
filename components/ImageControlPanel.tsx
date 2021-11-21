@@ -11,7 +11,10 @@ export interface Option {
   values: LabeledValue[]
 }
 
-export type GetImageRef<T> = (data: Record<keyof T, string>) => string
+export type GetImageRef<T> = (
+  data: Record<keyof T, string>,
+  preview?: boolean
+) => string
 
 export interface UniversalControls {
   text: Record<string, Option>
@@ -182,7 +185,7 @@ function ImageControlPanel<
       ))}
 
       <img
-        src={getImageRef(imgRefArgs)}
+        src={getImageRef(imgRefArgs, true)}
         alt="Board with the verse"
         className="
           md:w-3/4
