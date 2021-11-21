@@ -10,7 +10,7 @@
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
-    "@prisma/client": "^3.4.2",
+    "@prisma/client": "^3.5.0",
     "@rmwc/linear-progress": "^6.1.4",
     "@typeofweb/schema": "^0.7.3",
     "@types/react-select": "^5.0.1",
