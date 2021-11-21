@@ -17,6 +17,10 @@ module.exports = {
           darken: '#b3b3b3',
           darkhover: '#B3B3B3',
         },
+        gh: {
+          DEFAULT: '#181616',
+          light: '#e7e9e9',
+        },
       },
     },
   },
