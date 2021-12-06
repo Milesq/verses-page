@@ -41,7 +41,7 @@
     "@types/lodash.throttle": "^4.1.6",
     "@types/ms": "^0.7.31",
     "@types/node": "^16.11.8",
-    "@types/ramda": "^0.27.50",
+    "@types/ramda": "^0.27.59",
     "@types/react": "^17.0.35",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
