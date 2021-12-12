@@ -1,7 +1,7 @@
 import { GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import { FC, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import axios from 'axios'
 import Select from 'react-select'
 import { useForm, Controller } from 'react-hook-form'
@@ -62,6 +62,7 @@ const Home: FC<StaticProps> = ({ templates }) => {
     handleSubmit,
     control,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm()
   const [isFormInProgress, lockForm] = useState(false)
@@ -70,6 +71,15 @@ const Home: FC<StaticProps> = ({ templates }) => {
   const [isControlPanelVisible, setControlPanelVisibility] = useState(false)
   const newVerseText = useRef(undefined)
   const { pathname, query, ...router } = useRouter()
+
+  useEffect(() => {
+    const { chapter, begVerse, endVerse } = query as ChapterData
+
+    const chapterText = `${chapter}:${begVerse}${
+      endVerse ? `-${endVerse}` : ''
+    }`
+    setValue('chapter', chapterText)
+  }, [query])
 
   function getBookName(): string {
     const {
