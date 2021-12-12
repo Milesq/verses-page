@@ -74,6 +74,7 @@ const Home: FC<StaticProps> = ({ templates }) => {
 
   useEffect(() => {
     const { chapter, begVerse, endVerse } = query as ChapterData
+    if (!chapter || !begVerse) return
 
     const chapterText = `${chapter}:${begVerse}${
       endVerse ? `-${endVerse}` : ''
