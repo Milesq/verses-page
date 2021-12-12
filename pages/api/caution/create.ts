@@ -58,7 +58,7 @@ function rateLimit(
 const payloadSchema = object({
   contact: optional(string()),
   content: string(),
-})
+})()
 
 const validator = validate(payloadSchema)
 
@@ -78,7 +78,7 @@ export default async (req: VercelRequest, res: VercelResponse) => {
   }
 
   try {
-    const { contact, content } = validator(req.body)
+    const { contact, content } = validator(req.body) as any
     const prisma = new PrismaClient()
 
     await prisma.caution.create({

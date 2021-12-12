@@ -28,11 +28,11 @@ export default async (
       sign: string(),
       type: string(),
       quality: optional(string()),
-    })
+    })()
   )
 
   try {
-    const { sign, verse, quality, type } = verseQueryValidator(req.query)
+    const { sign, verse, quality, type } = verseQueryValidator(req.query) as any
     const image = await createBoard(type, sign, `“${verse}”`, quality)
 
     res

@@ -5,7 +5,7 @@ import makeError, { makeErrorSender } from '../../../errors'
 const verseQueryValidator = validate(
   object({
     type: string(),
-  })
+  })()
 )
 
 export default async (
@@ -15,7 +15,7 @@ export default async (
   const err = makeErrorSender(res)
 
   try {
-    const { type } = verseQueryValidator(req.query)
+    const { type } = verseQueryValidator(req.query) as any
 
     const apiUrl = `${process.env.IMAGE_API}/template/${type}`
 

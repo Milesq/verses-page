@@ -26,8 +26,8 @@ const verseQueryValidator = validate(
     lang: string(),
     book: string(),
     chapter: string(),
-    verses: tuple([string(), string()]),
-  })
+    verses: tuple([string(), string()])(),
+  })()
 )
 
 function extractText(node: Node) {
@@ -77,7 +77,9 @@ export default async (
   const err = makeErrorSender(res)
 
   try {
-    const { lang, book, chapter, verses } = verseQueryValidator(req.query)
+    const { lang, book, chapter, verses } = verseQueryValidator(
+      req.query
+    ) as any
     const [begVerse, endVerse] = verses.map(el => parseInt(el, 10))
     if (begVerse > endVerse) {
       return err(makeError('secondGreaterThanFirst'))
