@@ -73,8 +73,11 @@ const Home: FC<StaticProps> = ({ templates }) => {
   const { pathname, query, ...router } = useRouter()
 
   useEffect(() => {
+    const defaultBook = currentBooks.find(({ value }) => value === query.book)
+    setValue('book', defaultBook)
+
     const { chapter, begVerse, endVerse } = query as ChapterData
-    if (!chapter || !begVerse) return
+    if ([chapter, begVerse].some(el => !el)) return
 
     const chapterText = `${chapter}:${begVerse}${
       endVerse ? `-${endVerse}` : ''
@@ -184,7 +187,6 @@ const Home: FC<StaticProps> = ({ templates }) => {
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label htmlFor="react-select-book" />
         <Controller
-          defaultValue=""
           name="book"
           control={control}
           rules={{
