@@ -72,19 +72,6 @@ const Home: FC<StaticProps> = ({ templates }) => {
   const newVerseText = useRef(undefined)
   const { pathname, query, ...router } = useRouter()
 
-  useEffect(() => {
-    const defaultBook = currentBooks.find(({ value }) => value === query.book)
-    setValue('book', defaultBook)
-
-    const { chapter, begVerse, endVerse } = query as ChapterData
-    if ([chapter, begVerse].some(el => !el)) return
-
-    const chapterText = `${chapter}:${begVerse}${
-      endVerse ? `-${endVerse}` : ''
-    }`
-    setValue('chapter', chapterText)
-  }, [query])
-
   function getBookName(): string {
     const {
       book,
@@ -148,6 +135,21 @@ const Home: FC<StaticProps> = ({ templates }) => {
 
     lockForm(false)
   }
+  const onSubmit = handleSubmit(submit)
+
+  useEffect(() => {
+    const defaultBook = currentBooks.find(({ value }) => value === query.book)
+    setValue('book', defaultBook)
+
+    const { chapter, begVerse, endVerse } = query as ChapterData
+    if ([chapter, begVerse].some(el => !el)) return
+
+    const chapterText = `${chapter}:${begVerse}${
+      endVerse ? `-${endVerse}` : ''
+    }`
+    setValue('chapter', chapterText)
+    onSubmit()
+  }, [query])
 
   const bgImages = Object.keys(templates).map(name => ({
     name,
@@ -183,7 +185,7 @@ const Home: FC<StaticProps> = ({ templates }) => {
         <title>Verses - generowanie plansz z wersetami</title>
       </Head>
 
-      <form onSubmit={handleSubmit(submit)} className={errors.book && 'error'}>
+      <form onSubmit={onSubmit} className={errors.book && 'error'}>
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label htmlFor="react-select-book" />
         <Controller
