@@ -93,6 +93,10 @@ const Home: FC<StaticProps> = ({ templates }) => {
       return
     }
 
+    ;(window as any).gtag('event', 'boardCreated', {
+      event_category: 'bbb',
+      event_label: 'ccc',
+    })
     router.push({
       pathname,
       query: {
