@@ -17,6 +17,7 @@ FROM alpine
 
 WORKDIR /app
 
+COPY --from=builder /home/*.ttf ./
 COPY --from=builder /home/templates ./templates
 COPY --from=builder /home/create-board ./
 
