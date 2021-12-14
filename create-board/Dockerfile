@@ -9,11 +9,9 @@ COPY . .
 
 RUN go build
 
-EXPOSE 80
-
-CMD [ "./create-board" ]
-
 FROM alpine
+
+EXPOSE 80
 
 WORKDIR /app
 
