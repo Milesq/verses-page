@@ -56,10 +56,13 @@ function ImageControlPanel<
   const data = useRef(defaultData)
   const imagesData = useRef(defaultImages)
 
-  const imgRefArgs: any = { ...data.current, ...imagesData.current }
+  const getImgRefArgs: () => any = () => ({
+    ...data.current,
+    ...imagesData.current,
+  })
 
   async function getImage(): Promise<{ blob: Blob; fileName: string }> {
-    const resp = await fetch(getImageRef(imgRefArgs))
+    const resp = await fetch(getImageRef(getImgRefArgs()))
     const blob = await resp.blob()
     const fileName = decodeURIComponent(resp.headers.get('X-Filename'))
 
@@ -79,7 +82,7 @@ function ImageControlPanel<
     const file = new File([blob], fileName, { type: blob.type })
 
     await (navigator.share as any)({
-      url: window.location.origin + getImageRef(imgRefArgs),
+      url: window.location.origin + getImageRef(getImgRefArgs()),
       title: 'Wygeneruj planszę z biblijnym wersetem',
       text: 'Odwiedź bible-verse.vercel.app',
       files: [file],
@@ -177,15 +180,15 @@ function ImageControlPanel<
           images={image}
           onUpdate={i => {
             const newImage = images[name][i]
-            refresh()
-
             imagesData.current[name] = newImage.name
+
+            refresh()
           }}
         />
       ))}
 
       <img
-        src={getImageRef(imgRefArgs, true)}
+        src={getImageRef(getImgRefArgs(), true)}
         alt="Board with the verse"
         className="
           md:w-3/4
