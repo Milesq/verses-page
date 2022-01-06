@@ -9,10 +9,19 @@ export interface ImagePropose {
 export interface ImagePickerProps {
   images: ImagePropose[]
   onUpdate?(idx: number): void
+  allowUpload?: boolean
 }
 
-const ImagePicker: FC<ImagePickerProps> = ({ images, onUpdate }) => {
+const ImagePicker: FC<ImagePickerProps> = ({
+  images,
+  onUpdate,
+  allowUpload = false,
+}) => {
   const sizeMultiplier = 7
+  const size = {
+    w: 16 * sizeMultiplier,
+    h: 9 * sizeMultiplier,
+  }
   const [currImgIdx, setCurrImgIdx] = useState(0)
 
   useEffect(() => {
@@ -28,13 +37,25 @@ const ImagePicker: FC<ImagePickerProps> = ({ images, onUpdate }) => {
       {images.map((image, i) => (
         <Image
           key={image.name}
-          width={16 * sizeMultiplier}
-          height={9 * sizeMultiplier}
+          width={size.w}
+          height={size.h}
           src={image.src}
           onClick={() => setCurrImgIdx(i)}
           className="cursor-pointer rounded-lg shadow-2xl"
         />
       ))}
+
+      {allowUpload && (
+        <div
+          className="text-white ring"
+          style={{
+            width: size.w,
+            height: size.h,
+          }}
+        >
+          +
+        </div>
+      )}
     </div>
   )
 }

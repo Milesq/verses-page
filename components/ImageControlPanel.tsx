@@ -176,6 +176,7 @@ function ImageControlPanel<
 
       {Object.entries(images).map(([name, image]) => (
         <ImagePicker
+          allowUpload
           key={name}
           images={image}
           onUpdate={i => {
