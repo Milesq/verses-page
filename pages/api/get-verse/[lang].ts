@@ -67,7 +67,7 @@ async function getVerses(endpoint: string, { book, chapter, verses }: Verse) {
     verseText += getOneVerse(i)
   }
 
-  return verseText.trim()
+  return verseText.trim().replace(/\.$/, '')
 }
 
 export default async (
