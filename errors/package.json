@@ -1,0 +1,8 @@
+{
+  "name": "get-verse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "author": "Milesq <wmilosz88@gmail.com>",
+  "license": "MIT"
+}

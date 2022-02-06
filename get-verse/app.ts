@@ -11,7 +11,7 @@ import {
 
 import books from 'scripts/books.json'
 import { Books } from 'scripts/Books'
-import makeError, { makeErrorSender } from '../errors'
+import makeError, { makeErrorSender } from 'errors'
 
 const parser = new DomParser()
 

@@ -1,0 +1,26 @@
+{
+  "name": "get-verse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "start": "ts-node index.ts",
+    "build:docker": "docker build -t get-verse -f Dockerfile.get-verse .."
+  },
+  "keywords": [],
+  "author": "Milesq <wmilosz88@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@typeofweb/schema": "^0.7.3",
+    "axios": "^0.25.0",
+    "dom-parser": "^0.1.6",
+    "errors": "file:../errors",
+    "express": "^4.17.2",
+    "scripts": "file:../scripts",
+    "ts-node": "^10.4.0"
+  },
+  "devDependencies": {
+    "@types/dom-parser": "^0.1.1",
+    "@types/express": "^4.17.13"
+  }
+}
