@@ -4,5 +4,8 @@
   "description": "",
   "main": "index.ts",
   "author": "Milesq <wmilosz88@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@vercel/node": "^1.12.1"
+  }
 }
