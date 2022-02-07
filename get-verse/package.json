@@ -12,12 +12,14 @@
   "license": "MIT",
   "dependencies": {
     "@typeofweb/schema": "^0.7.3",
+    "@vercel/node": "^1.12.1",
     "axios": "^0.25.0",
     "dom-parser": "^0.1.6",
     "errors": "file:../errors",
     "express": "^4.17.2",
     "scripts": "file:../scripts",
-    "ts-node": "^10.4.0"
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.3"
   },
   "devDependencies": {
     "@types/dom-parser": "^0.1.1",

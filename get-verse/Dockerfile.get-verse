@@ -1,0 +1,21 @@
+FROM node:17-slim
+
+WORKDIR /home/node/app/get-verse
+
+RUN mkdir ../scripts
+RUN mkdir ../errors
+
+COPY ./errors ../errors
+RUN cd ../errors && npm install
+
+COPY ./get-verse/package*.json .
+
+RUN npm install --only=prod
+
+COPY ./scripts ../scripts
+
+COPY ./get-verse .
+
+EXPOSE 3000
+
+CMD [ "npm", "run", "start" ]
