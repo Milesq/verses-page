@@ -109,7 +109,7 @@ function ImageControlPanel<
 
   return (
     <>
-      <div className="bg-gray-300 dark:border-gray-900 border w-full my-10" />
+      <div className="bg-gray-300 dark:border-gray-800 border w-full my-10" />
 
       <div className="flex items-center justify-between mb-8 flex-col-reverse gap-3 sm:gap-0 sm:flex-row">
         {Object.entries(textOpts).map(
