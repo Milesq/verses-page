@@ -32,7 +32,7 @@
     "sass": "^1.55.0",
     "scripts": "file:scripts",
     "sharp": "^0.31.1",
-    "sweetalert2": "^11.4.35",
+    "sweetalert2": "^11.6.4",
     "tailwindcss": "^3.1.8"
   },
   "devDependencies": {
