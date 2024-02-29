@@ -8,10 +8,11 @@ export interface ImagePropose {
 
 export interface ImagePickerProps {
   images: ImagePropose[]
+  // eslint-disable-next-line react/require-default-props
   onUpdate?(idx: number): void
 }
 
-const ImagePicker: FC<ImagePickerProps> = ({ images, onUpdate }) => {
+const ImagePicker: FC<ImagePickerProps> = ({ images, onUpdate = () => {} }) => {
   const sizeMultiplier = 7
   const [currImgIdx, setCurrImgIdx] = useState(0)
 
