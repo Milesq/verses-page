@@ -26,5 +26,9 @@ func main() {
 	app.Get("/templates", routes.ListTemplates)
 	app.Get("/template/:name", routes.ShowTemplate)
 
-	app.Listen(addr)
+	err := app.Listen(addr)
+
+	if err != nil {
+		panic(err)
+	}
 }
